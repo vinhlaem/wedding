@@ -1,0 +1,23 @@
+{
+  "programs": [
+    {
+      "title": "Wedding Ceremony",
+      "time": "3:30 pm",
+      "description": "We exchange our vows and tie the knot amidst the beauty of St Marry's Church.",
+      "image": "assets/images/gallery/image-1.png"
+    },
+    {
+      "title": "Appetizers & Drinks",
+      "time": "5:00 pm",
+      "description": "Mingle over appetizers and refreshing drinks, setting the tone for an evening of celebration.",
+      "image": "assets/images/gallery/image-2.png"
+    },
+    {
+      "title": "Dinner Service",
+      "time": "7:30 pm",
+      "description": "A gourmet dinner service offering a culinary journey, tailored to indulge the senses and honor the occasion.",
+      "image": "assets/images/gallery/image-4.png"
+    }
+  ]
+}
+

@@ -1,0 +1,23 @@
+{
+  "events": [
+    {
+      "date": "25 July 2023",
+      "title": "We Meet",
+      "description": "We met by chance at a coffee shop on a rainy afternoon—she was reading her favorite book, and I offered her the last available seat. What began as casual conversation quickly turned into hours of laughter, shared dreams, and a spark neither of them expected.",
+      "image": "assets/images/timeline/timeline-1.png"
+    },
+    {
+      "date": "14 December 2023",
+      "title": "The First Date",
+      "description": "Over time, their bond deepened—built on mutual respect, love for travel, late-night talks, and endless support through life's ups and downs. From spontaneous road trips to quiet evenings at home, they discovered that their happiest moments were simply being together.",
+      "image": "assets/images/timeline/timeline-1.png"
+    },
+    {
+      "date": "19 January 2025",
+      "title": "The Proposal",
+      "description": "Years later, Wilson proposed at the very coffee shop where it all began, and Amanda said yes without hesitation. Today, surrounded by loved ones, they celebrate the beginning of a forever that feels like it was always meant to be.",
+      "image": "assets/images/timeline/timeline-1.png"
+    }
+  ]
+}
+
