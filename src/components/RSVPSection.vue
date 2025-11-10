@@ -21,7 +21,10 @@
 
         <!-- Side Image -->
         <div class="rsvp-message-wrap">
-          <div class="rsvp-message-item-container">
+          <div v-if="loading" class="loading">
+            <div class="loading-spinner"></div>
+          </div>
+          <div v-else class="rsvp-message-item-container">
             <div class="rsvp-message-item" v-for="message in messages" :key="message.id">
               <span class="rsvp-message-item-name">{{ message.name }}</span>
               <p class="rsvp-message-item-message">{{ message.message }}</p>
@@ -242,7 +245,25 @@ export default {
   font-family: var(--font-mulish);
   font-size: 0.8rem;
 }
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 375px;
 
+}
+.loading-spinner {
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #d4a5a5;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 /* Responsive */
 @media (max-width: 1024px) {
   .rsvp-grid { 
