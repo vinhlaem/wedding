@@ -6,13 +6,13 @@
         <div class="rsvp-card">
           <h2 class="rsvp-title">{{ title }}</h2>
 
-          <form class="rsvp-form" @submit.prevent>
+          <form class="rsvp-form" @submit.prevent="sendMessage">
             <label class="rsvp-label">Name
-              <input class="rsvp-input" type="text" placeholder="Your full name" />
+              <input class="rsvp-input" v-model="name" type="text" placeholder="Your full name" />
             </label>
 
             <label class="rsvp-label">Message
-              <textarea class="rsvp-textarea" rows="5" placeholder="Leave your best wishes for the couple..."></textarea>
+              <textarea class="rsvp-textarea" v-model="message" rows="5" placeholder="Leave your best wishes for the couple..."></textarea>
             </label>
 
             <button class="rsvp-button" type="submit">Send</button>
@@ -20,19 +20,81 @@
         </div>
 
         <!-- Side Image -->
-        <div class="rsvp-image-wrap">
-          <img :src="sideImage" alt="RSVP" />
+        <div class="rsvp-message-wrap">
+          <div class="rsvp-message-item-container">
+            <div class="rsvp-message-item" v-for="message in messages" :key="message.id">
+              <span class="rsvp-message-item-name">{{ message.name }}</span>
+              <p class="rsvp-message-item-message">{{ message.message }}</p>
+              <p class="rsvp-message-item-time">{{ formatDate(message.createdAt) }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script setup>
+<script>
+import api from '@/api/axios'
 import rsvpData from '@/data/rsvp.json'
 const title = rsvpData.title
-const assetMap = import.meta.glob('../assets/**/*', { eager: true, as: 'url' })
-const sideImage = assetMap[`../${rsvpData.sideImage}`] || rsvpData.sideImage
+export default {
+  data() {
+    return {
+      name: "",
+      message: "",
+      messages: [],
+      loading: false,
+    };
+  },
+  methods: {
+    async getMessages() {
+      this.loading = true;
+      try {
+        const res = await api.get("/messages");
+        this.messages = res.data.data;
+      } catch (err) {
+        console.error(err);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async sendMessage() {
+      if (!this.name || !this.message) return;
+      try {
+        await api.post("/messages", {
+          name: this.name,
+          message: this.message,
+        });
+        this.name = "";
+        this.message = "";
+        this.clearForm();
+        this.getMessages(); // refresh list
+      } catch (err) {
+        console.error("Failed to send message:", err);
+      }
+    },
+    clearForm() {
+      this.name = "";
+      this.message = "";
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false, // 24h format
+      });
+    }
+  },
+  mounted() {
+    this.getMessages();
+  },
+};
 </script>
 
 <style scoped>
@@ -50,15 +112,18 @@ const sideImage = assetMap[`../${rsvpData.sideImage}`] || rsvpData.sideImage
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 24px;
-  align-items: center;
+  align-items: stretch;
+  max-height: 375px;
 }
 
 /* Card */
 .rsvp-card {
+  flex: 1;
   background: rgba(255, 255, 255, 0.98);
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(0,0,0,0.12);
   padding: 32px 28px;
+  height: 100%;
 }
 
 .rsvp-title {
@@ -109,18 +174,74 @@ const sideImage = assetMap[`../${rsvpData.sideImage}`] || rsvpData.sideImage
   border-radius: 999px;
   padding: 12px 22px;
   font-weight: 700;
+  font-size: 1.2rem;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(212,165,165,0.35);
 }
 .rsvp-button:hover { background: #c49595; }
 
-/* Image */
-.rsvp-image-wrap {
+.rsvp-message-wrap {
+  flex: 1;
+  padding: 32px 28px;
   border-radius: 24px;
-  overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  height: 100%;
+  max-height: 375px;
 }
-.rsvp-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.rsvp-message-item-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 12px
+}
+
+.rsvp-message-item-container::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.rsvp-message-item-container::-webkit-scrollbar-track {
+  background: #f0e6e6; 
+  border-radius: 12px;
+}
+
+.rsvp-message-item-container::-webkit-scrollbar-thumb {
+  background-color: #d4a5a5; 
+  border-radius: 12px;
+  border: 2px solid #f0e6e6; 
+}
+
+.rsvp-message-item-container::-webkit-scrollbar-thumb:hover {
+  background-color: #c49595; 
+}
+.rsvp-message-item {
+  position: relative;
+  background: linear-gradient(135deg, #fff6f9, #ffeaf0);
+  border-radius: 20px;
+  padding: 24px 20px 16px 24px;
+  box-shadow: 0 6px 18px rgba(212,165,165,0.2);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+}
+.rsvp-message-item:hover {
+  transform: translateY(-5px);
+}
+.rsvp-message-item-name {
+  font-family: var(--font-mulish);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.rsvp-message-item-message {
+  font-family: var(--font-mulish);
+  font-size: 1rem;
+}
+.rsvp-message-item-time {
+  font-family: var(--font-mulish);
+  font-size: 0.8rem;
+}
 
 /* Responsive */
 @media (max-width: 1024px) {
