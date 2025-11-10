@@ -245,8 +245,12 @@ export default {
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .rsvp-grid { grid-template-columns: 1fr; }
-  .rsvp-image-wrap { order: 2; }
+  .rsvp-grid { 
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+  .rsvp-message-wrap { order: 2; max-height: 375px; }
+  .rsvp-message-item-container {height: 100%; }
 }
 
 @media (max-width: 768px) {
