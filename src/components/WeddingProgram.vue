@@ -4,7 +4,8 @@
       <TitleSection title="The Schedule" />
       <h2 class="program-title">Our Wedding Programs</h2>
       <p class="program-subtitle">
-        The main ceremony starts on 16:00, September 24th at Wedding Paradise Wedding Hall, Royal Ln. Mesa, New Jersey.
+        The main ceremony starts on 16:00, September 24th at Wedding Paradise
+        Wedding Hall, Royal Ln. Mesa, New Jersey.
       </p>
 
       <div class="program-grid">
@@ -22,13 +23,37 @@
 </template>
 
 <script setup>
-import TitleSection from '@/components/common/TitleSection.vue'
-import programData from '@/data/weddingProgram.json'
-const assetMap = import.meta.glob('../assets/**/*', { eager: true, as: 'url' })
-const programs = programData.programs.map(p => ({
+import { ref, onMounted } from "vue";
+import TitleSection from "@/components/common/TitleSection.vue";
+import programData from "@/data/weddingProgram.json";
+import { fetchMedia } from "@/api/media";
+
+// Resolve local assets as fallback
+const assetMap = import.meta.glob("../assets/**/*", { eager: true, as: "url" });
+const fallbackPrograms = programData.programs.map((p) => ({
   ...p,
   image: assetMap[`../${p.image}`] || p.image,
-}))
+}));
+
+const programs = ref(fallbackPrograms);
+
+onMounted(async () => {
+  try {
+    const items = await fetchMedia("program");
+    if (items && items.length > 0) {
+      // Merge API images by index with existing program metadata
+      programs.value = fallbackPrograms.map((p, i) => ({
+        ...p,
+        image: items[i]?.imageUrl ?? p.image,
+      }));
+    }
+  } catch (err) {
+    console.warn(
+      "Could not load program images from API, using local assets.",
+      err,
+    );
+  }
+});
 </script>
 
 <style scoped>
@@ -70,7 +95,7 @@ const programs = programData.programs.map(p => ({
   border: 1px solid #eee;
   border-radius: 16px;
   padding: 24px 20px 28px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
 .program-media {
@@ -79,7 +104,7 @@ const programs = programData.programs.map(p => ({
   margin: 0 auto 16px;
   border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .program-media img {
@@ -113,18 +138,36 @@ const programs = programData.programs.map(p => ({
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .program-media { width: 200px; height: 200px; }
+  .program-media {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 @media (max-width: 768px) {
-  .program-section { padding: 60px 16px; }
-  .program-grid { grid-template-columns: 1fr; gap: 20px; }
-  .program-media { width: 180px; height: 180px; }
-  .program-title { font-size: 1.8rem; }
+  .program-section {
+    padding: 60px 16px;
+  }
+  .program-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .program-media {
+    width: 180px;
+    height: 180px;
+  }
+  .program-title {
+    font-size: 1.8rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .program-media { width: 160px; height: 160px; }
-  .program-title { font-size: 1.6rem; }
+  .program-media {
+    width: 160px;
+    height: 160px;
+  }
+  .program-title {
+    font-size: 1.6rem;
+  }
 }
 </style>

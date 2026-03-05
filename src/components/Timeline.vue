@@ -5,14 +5,17 @@
       <h3 class="timeline-subtitle">A Brief History Of Our Love</h3>
 
       <div class="timeline-wrapper">
-        <div 
-          v-for="(event, index) in timelineEvents" 
+        <div
+          v-for="(event, index) in timelineEvents"
           :key="index"
           class="timeline-event"
         >
           <!-- Timeline line and marker -->
           <div class="timeline-marker-wrapper">
-            <div class="timeline-line" :class="{ 'last': index === timelineEvents.length - 1 }"></div>
+            <div
+              class="timeline-line"
+              :class="{ last: index === timelineEvents.length - 1 }"
+            ></div>
             <div class="timeline-marker"></div>
           </div>
 
@@ -34,13 +37,35 @@
 </template>
 
 <script setup>
-import TitleSection from '@/components/common/TitleSection.vue'
-import timelineData from '@/data/timeline.json'
-const assetMap = import.meta.glob('../assets/**/*', { eager: true, as: 'url' })
-const timelineEvents = timelineData.events.map(e => ({
+import { ref, onMounted } from "vue";
+import TitleSection from "@/components/common/TitleSection.vue";
+import timelineData from "@/data/timeline.json";
+import { fetchMedia } from "@/api/media";
+
+const assetMap = import.meta.glob("../assets/**/*", { eager: true, as: "url" });
+const fallbackEvents = timelineData.events.map((e) => ({
   ...e,
   image: assetMap[`../${e.image}`] || e.image,
-}))
+}));
+
+const timelineEvents = ref(fallbackEvents);
+
+onMounted(async () => {
+  try {
+    const items = await fetchMedia("timeline");
+    if (items && items.length > 0) {
+      timelineEvents.value = fallbackEvents.map((e, i) => ({
+        ...e,
+        image: items[i]?.imageUrl ?? e.image,
+      }));
+    }
+  } catch (err) {
+    console.warn(
+      "Could not load timeline images from API, using local assets.",
+      err,
+    );
+  }
+});
 </script>
 
 <style scoped>
@@ -263,4 +288,3 @@ const timelineEvents = timelineData.events.map(e => ({
   }
 }
 </style>
-

@@ -2,22 +2,28 @@
   <section class="video-section reveal">
     <div class="video-container">
       <div class="video-wrapper" @click="togglePlay">
-        <video 
+        <video
           ref="videoRef"
-          :src="videoSrc" 
+          :src="videoSrc"
           :poster="videoPoster"
           class="main-video"
           @play="onVideoPlay"
           @pause="onVideoPause"
           @ended="onVideoEnd"
         ></video>
-        
+
         <!-- Play Button Overlay -->
         <div v-if="!isPlaying" class="play-button-overlay">
           <div class="play-button">
-            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)"/>
-              <path d="M32 24L32 56L56 40L32 24Z" fill="#d4a5a5"/>
+            <svg
+              width="80"
+              height="80"
+              viewBox="0 0 80 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)" />
+              <path d="M32 24L32 56L56 40L32 24Z" fill="#d4a5a5" />
             </svg>
           </div>
         </div>
@@ -27,35 +33,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from "vue";
+import { fetchMedia } from "@/api/media";
 
-const videoRef = ref(null)
-const isPlaying = ref(false)
+const videoRef = ref(null);
+const isPlaying = ref(false);
 
-// Replace with your actual video source and poster
-const videoSrc = ref('')
-const videoPoster = ref('')
+const videoSrc = ref("");
+const videoPoster = ref("");
+
+onMounted(async () => {
+  try {
+    const [sourceItems, posterItems] = await Promise.all([
+      fetchMedia("video", "source"),
+      fetchMedia("video", "poster"),
+    ]);
+    if (sourceItems?.length > 0) videoSrc.value = sourceItems[0].imageUrl;
+    if (posterItems?.length > 0) videoPoster.value = posterItems[0].imageUrl;
+  } catch (err) {
+    console.warn("Could not load video from API.", err);
+  }
+});
 
 function togglePlay() {
-  if (!videoRef.value) return
-  
+  if (!videoRef.value) return;
+
   if (isPlaying.value) {
-    videoRef.value.pause()
+    videoRef.value.pause();
   } else {
-    videoRef.value.play()
+    videoRef.value.play();
   }
 }
 
 function onVideoPlay() {
-  isPlaying.value = true
+  isPlaying.value = true;
 }
 
 function onVideoPause() {
-  isPlaying.value = false
+  isPlaying.value = false;
 }
 
 function onVideoEnd() {
-  isPlaying.value = false
+  isPlaying.value = false;
 }
 </script>
 
@@ -95,7 +114,9 @@ function onVideoEnd() {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.1);
-  transition: opacity 0.3s ease, background 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    background 0.3s ease;
   z-index: 2;
 }
 
@@ -148,4 +169,3 @@ function onVideoEnd() {
   }
 }
 </style>
-

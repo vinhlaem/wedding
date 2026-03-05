@@ -1,12 +1,20 @@
 <template>
-  <div class="banner" :style="{ backgroundImage: `url(${bannerImage})` }">
+  <div class="banner" :style="bannerStyle">
     <div class="banner-overlay"></div>
     <div class="banner-content">
       <div class="invitation-card reveal">
         <div class="invitation-card-content">
-            <img :src="topDecoration" alt="Top decoration" class="decoration-top">
-            <img :src="bottomDecoration" alt="Bottom decoration" class="decoration-bottom">
-        
+          <img
+            :src="topDecoration"
+            alt="Top decoration"
+            class="decoration-top"
+          />
+          <img
+            :src="bottomDecoration"
+            alt="Bottom decoration"
+            class="decoration-bottom"
+          />
+
           <div class="invitation-text">
             <p class="invitation-subtitle">
               Please join us to celebrate our love
@@ -22,10 +30,32 @@
 </template>
 
 <script setup>
-import bannerImage from "@/assets/images/banner/banner.png";
+import { ref, computed, onMounted } from "vue";
 import topDecoration from "@/assets/images/banner/top.svg";
 import bottomDecoration from "@/assets/images/banner/bottom.svg";
-import Countdown from '@/components/Countdown.vue'
+import Countdown from "@/components/Countdown.vue";
+import { fetchMedia } from "@/api/media";
+
+// Fallback to the local asset while the API loads
+import fallbackBanner from "@/assets/images/banner/banner.png";
+
+const bannerImageUrl = ref(fallbackBanner);
+
+const bannerStyle = computed(() => ({
+  backgroundImage: `url(${bannerImageUrl.value})`,
+}));
+
+onMounted(async () => {
+  try {
+    const items = await fetchMedia("banner");
+    if (items && items.length > 0) {
+      // Use the first banner image (sorted by order on the backend)
+      bannerImageUrl.value = items[0].imageUrl;
+    }
+  } catch (err) {
+    console.warn("Could not load banner from API, using local asset.", err);
+  }
+});
 </script>
 
 <style scoped>
@@ -65,7 +95,7 @@ import Countdown from '@/components/Countdown.vue'
 .banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35));
+  background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35));
   z-index: 1;
 }
 
@@ -77,7 +107,7 @@ import Countdown from '@/components/Countdown.vue'
 }
 
 .invitation-card-content {
-  border-radius: 30px 0px 30px 0px;    
+  border-radius: 30px 0px 30px 0px;
   padding: 20px;
   width: 100%;
   text-align: center;
@@ -157,7 +187,6 @@ import Countdown from '@/components/Countdown.vue'
 
 /* Responsive */
 @media (max-width: 768px) {
-
   .couple-names {
     font-size: 2.8rem;
   }
@@ -175,7 +204,7 @@ import Countdown from '@/components/Countdown.vue'
   .couple-names {
     margin: 0;
   }
-  
+
   .rsvp-button {
     padding: 12px 28px;
     font-size: 14px;

@@ -2,17 +2,17 @@
   <section id="gallery" class="gallery-section reveal section-anchor">
     <div class="gallery-container">
       <TitleSection title="Our Gallery" />
-      
+
       <div class="gallery-grid">
-        <div 
-          v-for="(image, index) in galleryImages" 
+        <div
+          v-for="(image, index) in galleryImages"
           :key="index"
           class="gallery-item"
           :class="`gallery-item-${index + 1}`"
           :style="{ animationDelay: `${index * 0.1}s` }"
         >
-          <img 
-            :src="image" 
+          <img
+            :src="image"
             :alt="`Gallery image ${index + 1}`"
             class="gallery-image"
             @click="openLightbox(index)"
@@ -26,58 +26,80 @@
       <button class="lightbox-close" @click="closeLightbox">✕</button>
       <button class="lightbox-prev" @click.stop="prevImage">‹</button>
       <button class="lightbox-next" @click.stop="nextImage">›</button>
-      <img :src="galleryImages[currentImageIndex]" alt="Gallery" class="lightbox-image" />
+      <img
+        :src="galleryImages[currentImageIndex]"
+        alt="Gallery"
+        class="lightbox-image"
+      />
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import TitleSection from '@/components/common/TitleSection.vue'
-import galleryData from '@/data/gallery.json'
-// Ensure Vite includes assets even when paths come from JSON
-const assetMap = import.meta.glob('../assets/**/*', { eager: true, as: 'url' })
-const galleryImages = ref(
-  galleryData.images.map(p => assetMap[`../${p}`] || p)
-)
+import { ref, onMounted } from "vue";
+import TitleSection from "@/components/common/TitleSection.vue";
+import { fetchMedia } from "@/api/media";
 
-const lightboxOpen = ref(false)
-const currentImageIndex = ref(0)
+// Local asset fallback map (still bundled by Vite for offline use)
+import galleryData from "@/data/gallery.json";
+const assetMap = import.meta.glob("../assets/**/*", { eager: true, as: "url" });
+const fallbackImages = galleryData.images.map((p) => assetMap[`../${p}`] || p);
+
+const galleryImages = ref(fallbackImages);
+const loading = ref(false);
+
+const lightboxOpen = ref(false);
+const currentImageIndex = ref(0);
 
 function openLightbox(index) {
-  currentImageIndex.value = index
-  lightboxOpen.value = true
-  document.body.style.overflow = 'hidden'
+  currentImageIndex.value = index;
+  lightboxOpen.value = true;
+  document.body.style.overflow = "hidden";
 }
 
 function closeLightbox() {
-  lightboxOpen.value = false
-  document.body.style.overflow = ''
+  lightboxOpen.value = false;
+  document.body.style.overflow = "";
 }
 
 function nextImage() {
-  currentImageIndex.value = (currentImageIndex.value + 1) % galleryImages.value.length
+  currentImageIndex.value =
+    (currentImageIndex.value + 1) % galleryImages.value.length;
 }
 
 function prevImage() {
-  currentImageIndex.value = currentImageIndex.value === 0 
-    ? galleryImages.value.length - 1 
-    : currentImageIndex.value - 1
+  currentImageIndex.value =
+    currentImageIndex.value === 0
+      ? galleryImages.value.length - 1
+      : currentImageIndex.value - 1;
 }
 
-onMounted(() => {
+onMounted(async () => {
+  // Fetch from API; fall back to local assets on error
+  loading.value = true;
+  try {
+    const items = await fetchMedia("gallery");
+    if (items && items.length > 0) {
+      galleryImages.value = items.map((item) => item.imageUrl);
+    }
+  } catch (err) {
+    console.warn("Could not load gallery from API, using local assets.", err);
+  } finally {
+    loading.value = false;
+  }
+
   // Close lightbox on escape key
   const handleEscape = (e) => {
-    if (e.key === 'Escape' && lightboxOpen.value) {
-      closeLightbox()
+    if (e.key === "Escape" && lightboxOpen.value) {
+      closeLightbox();
     }
-  }
-  document.addEventListener('keydown', handleEscape)
-  
+  };
+  document.addEventListener("keydown", handleEscape);
+
   return () => {
-    document.removeEventListener('keydown', handleEscape)
-  }
-})
+    document.removeEventListener("keydown", handleEscape);
+  };
+});
 </script>
 
 <style scoped>
@@ -107,7 +129,9 @@ onMounted(() => {
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
 }
@@ -155,7 +179,6 @@ onMounted(() => {
   grid-row: 5 / 9;
   z-index: 2;
 }
-
 
 @keyframes fadeInUp {
   from {
@@ -384,4 +407,3 @@ onMounted(() => {
   }
 }
 </style>
-
