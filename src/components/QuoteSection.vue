@@ -111,7 +111,7 @@ onMounted(async () => {
 
 .signature-text {
   font-family: var(--font-dancing-script);
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: #d4a5a5;
   font-weight: 600;
   margin: 0;

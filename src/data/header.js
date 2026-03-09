@@ -1,26 +1,26 @@
 export const header = [
-    {
-        label: 'Home',
-        href: '/',
-    },
-    {
-        label: 'Couple',
-        href: '#couple',
-    },
-    {
-        label: 'Story',
-        href: '#story',
-    },
-    {
-        label: 'Gallery',
-        href: '#gallery',
-    },
-    {
-        label: 'RSVP',
-        href: '#rsvp',
-    },
-    {
-        label: 'Event',
-        href: '#event',
-    },
-]
+  {
+    label: "Trang chủ",
+    href: "/",
+  },
+  {
+    label: "Cặp đôi",
+    href: "#couple",
+  },
+  {
+    label: "Câu chuyện",
+    href: "#story",
+  },
+  {
+    label: "Bộ ảnh",
+    href: "#gallery",
+  },
+  {
+    label: "Sự kiện",
+    href: "#event",
+  },
+  {
+    label: "Lời chúc",
+    href: "#rsvp",
+  },
+];

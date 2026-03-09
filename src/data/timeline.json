@@ -2,22 +2,21 @@
   "events": [
     {
       "date": "25 July 2023",
-      "title": "We Meet",
-      "description": "We met by chance at a coffee shop on a rainy afternoon—she was reading her favorite book, and I offered her the last available seat. What began as casual conversation quickly turned into hours of laughter, shared dreams, and a spark neither of them expected.",
+      "title": "Lần đầu gặp gỡ",
+      "description": "Chúng tôi tình cờ gặp nhau tại một quán cà phê trong một buổi chiều mưa — cô ấy đang đọc cuốn sách yêu thích, và tôi mời cô ấy chỗ ngồi cuối cùng. Từ cuộc trò chuyện ngắn đã trở thành những giờ cười đùa, chia sẻ ước mơ và một tia lửa bất ngờ.",
       "image": "assets/images/timeline/timeline-1.png"
     },
     {
       "date": "14 December 2023",
-      "title": "The First Date",
-      "description": "Over time, their bond deepened—built on mutual respect, love for travel, late-night talks, and endless support through life's ups and downs. From spontaneous road trips to quiet evenings at home, they discovered that their happiest moments were simply being together.",
+      "title": "Buổi hẹn đầu tiên",
+      "description": "Theo thời gian, tình cảm của họ ngày càng sâu đậm — xây dựng trên sự tôn trọng lẫn nhau, niềm yêu thích du lịch, những cuộc trò chuyện đêm khuya và sự đồng hành vô điều kiện. Từ những chuyến đi ngẫu hứng đến những buổi tối yên bình, họ nhận ra hạnh phúc nhất là khi ở bên nhau.",
       "image": "assets/images/timeline/timeline-1.png"
     },
     {
       "date": "19 January 2025",
-      "title": "The Proposal",
-      "description": "Years later, Wilson proposed at the very coffee shop where it all began, and Amanda said yes without hesitation. Today, surrounded by loved ones, they celebrate the beginning of a forever that feels like it was always meant to be.",
+      "title": "Cầu hôn",
+      "description": "Nhiều năm sau, Vinh đã cầu hôn tại chính quán cà phê nơi mọi chuyện bắt đầu, và Nguyệt đã đồng ý ngay lập tức. Hôm nay, cùng những người thân yêu, họ kỷ niệm khởi đầu cho một chặng đường mãi mãi.",
       "image": "assets/images/timeline/timeline-1.png"
     }
   ]
 }
-

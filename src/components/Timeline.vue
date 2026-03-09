@@ -1,8 +1,10 @@
 <template>
   <section id="story" class="timeline-section reveal section-anchor">
     <div class="timeline-container">
-      <TitleSection title="Our Story" />
-      <h3 class="timeline-subtitle">A Brief History Of Our Love</h3>
+      <TitleSection title="Câu chuyện của chúng tôi" />
+      <h3 class="timeline-subtitle">
+        Những khoảnh khắc đáng nhớ trên hành trình chúng tôi tìm thấy nhau
+      </h3>
 
       <div class="timeline-wrapper">
         <div

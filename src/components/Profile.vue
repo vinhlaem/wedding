@@ -16,14 +16,26 @@
           <img :src="heartIcon" alt="Heart" class="heart-icon" />
           <div class="info-husband">
             <div class="info-container">
-              <h3 class="name">{{ profile.husband.name }}</h3>
-              <p class="info-text">{{ profile.husband.text }}</p>
+              <span class="role-line">
+                <!-- Chú Rể -->
+                <h3 class="name">{{ profile.husband.name }}</h3>
+              </span>
+              <p
+                class="info-text"
+                v-html="formatFamilyText(profile.husband.text)"
+              ></p>
             </div>
           </div>
           <div class="info-wife">
             <div class="info-container">
-              <h3 class="name">{{ profile.wife.name }}</h3>
-              <p class="info-text">{{ profile.wife.text }}</p>
+              <span class="role-line">
+                <!-- Cô Dâu -->
+                <h3 class="name">{{ profile.wife.name }}</h3>
+              </span>
+              <p
+                class="info-text"
+                v-html="formatFamilyText(profile.wife.text)"
+              ></p>
             </div>
           </div>
         </div>
@@ -44,6 +56,39 @@ import localHusbandImage from "@/assets/images/profile/husband.png";
 
 const wifeImage = ref(localWifeImage);
 const husbandImage = ref(localHusbandImage);
+
+// Safely format family text: allow <br> and bold relative names like 'Ba' and 'Mẹ'
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function formatFamilyText(raw) {
+  if (!raw) return "";
+  // Use a simple token unlikely to appear in content
+  const BR = "___BR___";
+  // normalize BR variants to a placeholder
+  let s = raw.replace(/<\/?br\s*\/?\s*>/gi, BR);
+
+  // escape all text to avoid injecting unexpected tags
+  s = escapeHtml(s);
+
+  // split by BR and process each segment separately
+  const parts = s.split(BR).map((part) => {
+    // for each label, if present, bold the following text
+    return part.replace(
+      /(Ba:|Bố:|Mẹ:)\s*(.*)/i,
+      (m, p1, p2) => `${p1} <strong>${p2.trim()}</strong>`,
+    );
+  });
+
+  // join with safe <br/>
+  return parts.join("<br/>");
+}
 
 onMounted(async () => {
   try {
@@ -186,6 +231,11 @@ onMounted(async () => {
   z-index: 4;
 }
 
+.role-line {
+  font-size: 1.5rem;
+  color: #333;
+}
+
 .name {
   font-family: var(--font-dancing-script);
   font-size: 3rem;
@@ -198,6 +248,7 @@ onMounted(async () => {
   font-size: 1.2rem;
   color: #333;
   font-weight: 400;
+  text-align: start;
 }
 
 @keyframes heartbeat {

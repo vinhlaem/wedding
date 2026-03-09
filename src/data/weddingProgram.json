@@ -1,23 +1,22 @@
 {
   "programs": [
     {
-      "title": "Wedding Ceremony",
-      "time": "3:30 pm",
-      "description": "We exchange our vows and tie the knot amidst the beauty of St Marry's Church.",
+      "title": "Tiệc cưới nhà gái",
+      "time": "waiting for update",
+      "description": "Tư gia nhà gái - Thôn Lai Binh, xã Vĩnh Linh, tỉnh Quảng Trị.",
       "image": "assets/images/gallery/image-1.png"
     },
     {
-      "title": "Appetizers & Drinks",
-      "time": "5:00 pm",
-      "description": "Mingle over appetizers and refreshing drinks, setting the tone for an evening of celebration.",
-      "image": "assets/images/gallery/image-2.png"
+      "title": "Lễ rước dâu",
+      "time": "waiting for update",
+      "description": "Tư gia nhà trai - Số 273 Âu cơ, phường Liên Chiểu, thành phố Đà Nẵng.",
+      "image": "assets/images/gallery/image-4.png"
     },
     {
-      "title": "Dinner Service",
-      "time": "7:30 pm",
-      "description": "A gourmet dinner service offering a culinary journey, tailored to indulge the senses and honor the occasion.",
-      "image": "assets/images/gallery/image-4.png"
+      "title": "Tiệc cưới nhà trai",
+      "time": "waiting for update",
+      "description": "Minh Châu Palace - Số 122b Lý Thái Tông, phường Hòa Khánh, thành phố Đà Nẵng.",
+      "image": "assets/images/gallery/image-2.png"
     }
   ]
 }
-

@@ -3,20 +3,42 @@
     <div class="footer-overlay"></div>
     <div class="footer-content">
       <div class="thankyou-box">
-        <h2 class="thankyou-title">Thank You!</h2>
+        <h2 class="thankyou-title">Lời cảm ơn!</h2>
         <p class="thankyou-text">
-          A wedding is a celebration of love—made even more meaningful by the presence of cherished friends and family.
-          Come celebrate love, laughter, and happily ever after with us.
+          Sự hiện diện và những lời chúc phúc của gia đình, người thân và bạn bè
+          chính là món quà quý giá nhất đối với hai đứa mình. Hai đứa mình chân
+          thành cảm ơn và rất mong được cùng mọi người chia sẻ khoảnh khắc hạnh
+          phúc trong ngày trọng đại này.
         </p>
       </div>
     </div>
   </footer>
-  
 </template>
 
 <script setup>
-import bgSrc from '@/assets/images/gallery/image-5.png'
-const bgImage = bgSrc
+import { ref, onMounted } from "vue";
+import bgSrc from "@/assets/images/gallery/image-5.png";
+import { fetchMedia } from "@/api/media";
+
+const bgImage = ref(bgSrc);
+
+// Resolve local assets as fallback (same pattern used in other components)
+const assetMap = import.meta.glob("../assets/**/*", { eager: true, as: "url" });
+
+onMounted(async () => {
+  try {
+    const items = await fetchMedia("footer");
+    if (items && items.length > 0) {
+      bgImage.value = items[0].imageUrl || bgSrc;
+    }
+  } catch (err) {
+    console.warn(
+      "Could not load footer image from API, using local asset.",
+      err,
+    );
+    bgImage.value = bgSrc;
+  }
+});
 </script>
 
 <style scoped>
@@ -44,9 +66,9 @@ const bgImage = bgSrc
 }
 
 .thankyou-box {
-  background: rgba(255,255,255,0.85);
-  border: 2px solid rgba(255,255,255,0.9);
-  outline: 2px solid rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  outline: 2px solid rgba(255, 255, 255, 0.6);
   outline-offset: 14px;
   padding: 28px 32px;
   max-width: 760px;

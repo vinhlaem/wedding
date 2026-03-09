@@ -16,12 +16,10 @@
           />
 
           <div class="invitation-text">
-            <p class="invitation-subtitle">
-              Please join us to celebrate our love
-            </p>
+            <p class="invitation-subtitle">Hãy đến chung vui cùng chúng tôi</p>
             <h1 class="couple-names">Vinh & Nguyệt</h1>
             <Countdown />
-            <button class="rsvp-button">RSVP</button>
+            <a href="#rsvp" class="rsvp-button">Gửi Lời Chúc</a>
           </div>
         </div>
       </div>
@@ -176,6 +174,7 @@ onMounted(async () => {
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
+  text-decoration: none;
   box-shadow: 0 4px 15px rgba(212, 165, 165, 0.3);
 }
 

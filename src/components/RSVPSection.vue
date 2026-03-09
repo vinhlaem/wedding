@@ -1,22 +1,47 @@
 <template>
   <section id="rsvp" class="rsvp-section reveal section-anchor">
     <div class="rsvp-container">
+      <TitleSection title="Gửi lời chúc" />
+
       <div class="rsvp-grid">
         <!-- Form Card -->
         <div class="rsvp-card">
           <h2 class="rsvp-title">{{ title }}</h2>
 
           <form class="rsvp-form" @submit.prevent="sendMessage">
-            <label class="rsvp-label">Name
-              <input class="rsvp-input" v-model="name" type="text" placeholder="Your full name" />
+            <label class="rsvp-label"
+              >Tên
+              <input
+                class="rsvp-input"
+                v-model="name"
+                type="text"
+                placeholder="Họ và tên"
+              />
             </label>
 
-            <label class="rsvp-label">Message
-              <textarea class="rsvp-textarea" v-model="message" rows="5"
-                placeholder="Leave your best wishes for the couple..."></textarea>
+            <label class="rsvp-label"
+              >Lời nhắn
+              <textarea
+                class="rsvp-textarea"
+                v-model="message"
+                rows="5"
+                placeholder="Gửi lời chúc tốt đẹp nhất cho cặp đôi..."
+              ></textarea>
             </label>
 
-            <button class="rsvp-button" type="submit">Send</button>
+            <button
+              :disabled="submitting || !name || !message"
+              aria-busy="${submitting}"
+              class="rsvp-button"
+              type="submit"
+            >
+              <span
+                v-if="submitting"
+                class="btn-spinner"
+                aria-hidden="true"
+              ></span>
+              <span v-if="!submitting">Gửi</span>
+            </button>
           </form>
         </div>
 
@@ -25,113 +50,138 @@
           <div v-if="loading" class="loading">
             <div class="loading-spinner"></div>
           </div>
-          <div v-else class="rsvp-message-item-container" ref="messageWrapRef" @scroll="handleScroll">
-            <div class="rsvp-message-item" v-for="message in messages" :key="message.id">
+          <div
+            v-else
+            class="rsvp-message-item-container"
+            ref="messageWrapRef"
+            @scroll="handleScroll"
+          >
+            <div
+              class="rsvp-message-item"
+              v-for="message in messages"
+              :key="message.id"
+            >
               <span class="rsvp-message-item-name">{{ message.name }}</span>
               <p class="rsvp-message-item-message">{{ message.message }}</p>
-              <p class="rsvp-message-item-time">{{ formatDate(message.createdAt) }}</p>
+              <p class="rsvp-message-item-time">
+                {{ formatDate(message.createdAt) }}
+              </p>
             </div>
           </div>
-          <div v-if="loadingMore" class="loading">Loading...</div>
+          <div v-if="loadingMore" class="loading">Đang tải...</div>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script>
-import api from '@/api/axios'
-import rsvpData from '@/data/rsvp.json'
-const title = rsvpData.title
-export default {
-  data() {
-    return {
-      name: "",
-      message: "",
-      messages: [],
-      loading: false,
-      loadingMore: false,
-      currentPage: 1,
-      totalPages: 1,
-      limit: 3,
-    };
-  },
-  methods: {
-    handleScroll() {
-      const container = this.$refs.messageWrapRef;
-      if (!container) return;
+<script setup>
+import { ref, onMounted } from "vue";
+import api from "@/api/axios";
+import rsvpData from "@/data/rsvp.json";
+import TitleSection from "@/components/common/TitleSection.vue";
 
-      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 20) {
-        this.fetchMoreMessages();
-      }
-    },
-    async getMessages(page = 1) {
-      if (this.loading) return;
+const title = ref(rsvpData.title);
+const name = ref("");
+const message = ref("");
+const messages = ref([]);
+const loading = ref(false);
+const loadingMore = ref(false);
+const submitting = ref(false);
+const currentPage = ref(1);
+const totalPages = ref(1);
+const limit = ref(3);
 
-      this.loading = true;
-      try {
-        const res = await api.get("/messages", { params: { page, limit: this.limit } });
-        this.messages = res.data.data;
-        this.currentPage = Number(res.data.currentPage);
-        this.totalPages = res.data.totalPages;
-      } catch (err) {
-        console.error(err);
-      } finally {
-        this.loading = false;
-      }
-    },
-    async fetchMoreMessages() {
-      if (this.loadingMore || this.currentPage >= this.totalPages) return;
+const messageWrapRef = ref(null);
 
-      this.loadingMore = true;
-      try {
-        const nextPage = this.currentPage + 1;
-        const res = await api.get("/messages", { params: { page: nextPage, limit: this.limit } });
-        this.messages = [...this.messages, ...res.data.data];
-        this.currentPage = Number(res.data.currentPage);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        this.loadingMore = false;
-      }
-    },
+const handleScroll = () => {
+  const container = messageWrapRef.value;
+  if (!container) return;
 
-    async sendMessage() {
-      if (!this.name || !this.message) return;
-      try {
-       const res = await api.post("/messages", {
-          name: this.name,
-          message: this.message,
-        });
-        this.messages = [res.data.data, ...this.messages];
-        this.name = "";
-        this.message = "";
-        this.clearForm();
-      } catch (err) {
-        console.error("Failed to send message:", err);
-      }
-    },
-    clearForm() {
-      this.name = "";
-      this.message = "";
-    },
-    formatDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleString('en-US', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false, // 24h format
-      });
-    }
-  },
-  mounted() {
-    this.getMessages();
-  },
+  if (
+    container.scrollTop + container.clientHeight >=
+    container.scrollHeight - 20
+  ) {
+    fetchMoreMessages();
+  }
 };
+
+async function getMessages(page = 1) {
+  if (loading.value) return;
+
+  loading.value = true;
+  try {
+    const res = await api.get("/messages", {
+      params: { page, limit: limit.value },
+    });
+    messages.value = res.data.data;
+    currentPage.value = Number(res.data.currentPage);
+    totalPages.value = res.data.totalPages;
+  } catch (err) {
+    console.error(err);
+  } finally {
+    loading.value = false;
+  }
+}
+
+async function fetchMoreMessages() {
+  if (loadingMore.value || currentPage.value >= totalPages.value) return;
+
+  loadingMore.value = true;
+  try {
+    const nextPage = currentPage.value + 1;
+    const res = await api.get("/messages", {
+      params: { page: nextPage, limit: limit.value },
+    });
+    messages.value = [...messages.value, ...res.data.data];
+    currentPage.value = Number(res.data.currentPage);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    loadingMore.value = false;
+  }
+}
+
+async function sendMessage() {
+  if (!name.value || !message.value) return;
+  submitting.value = true;
+  try {
+    const res = await api.post("/messages", {
+      name: name.value,
+      message: message.value,
+    });
+    messages.value = [res.data.data, ...messages.value];
+    name.value = "";
+    message.value = "";
+    clearForm();
+  } catch (err) {
+    console.error("Failed to send message:", err);
+  } finally {
+    submitting.value = false;
+  }
+}
+
+function clearForm() {
+  name.value = "";
+  message.value = "";
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return date.toLocaleString("vi-VN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false, // 24h format
+  });
+}
+
+onMounted(() => {
+  getMessages();
+});
 </script>
 
 <style scoped>
@@ -150,7 +200,7 @@ export default {
   grid-template-columns: 1.1fr 1fr;
   gap: 24px;
   align-items: stretch;
-  max-height: 375px;
+  max-height: 426px;
 }
 
 /* Card */
@@ -225,13 +275,25 @@ export default {
   background: #c49595;
 }
 
+.btn-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
 .rsvp-message-wrap {
   flex: 1;
   padding: 32px 28px;
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
   height: 100%;
-  max-height: 375px;
+  max-height: 426px;
 }
 
 .rsvp-message-item-container {
@@ -240,7 +302,7 @@ export default {
   gap: 16px;
   height: 100%;
   overflow-y: auto;
-  padding-right: 12px
+  padding-right: 12px;
 }
 
 .rsvp-message-item-container::-webkit-scrollbar {
@@ -298,7 +360,6 @@ export default {
   justify-content: center;
   align-items: center;
   height: 375px;
-
 }
 
 .loading-spinner {

@@ -1,7 +1,7 @@
 <template>
   <section id="gallery" class="gallery-section reveal section-anchor">
     <div class="gallery-container">
-      <TitleSection title="Our Gallery" />
+      <TitleSection title="Album Ảnh" />
 
       <div class="gallery-grid">
         <div
@@ -13,7 +13,7 @@
         >
           <img
             :src="image"
-            :alt="`Gallery image ${index + 1}`"
+            :alt="`Ảnh ${index + 1}`"
             class="gallery-image"
             @click="openLightbox(index)"
           />

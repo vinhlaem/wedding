@@ -2,7 +2,7 @@ import api from "./axios";
 
 /**
  * Fetch media items for a given component (and optional role) from the backend.
- * @param {'banner'|'gallery'|'program'|'video'|'timeline'|'profile'|'quote'} component
+ * @param {'banner'|'gallery'|'program'|'video'|'timeline'|'profile'|'quote'|'footer'} component
  * @param {string} [role] - optional role filter (e.g. 'wife', 'husband', 'image1', 'source', 'poster')
  * @returns {Promise<Array>}
  */

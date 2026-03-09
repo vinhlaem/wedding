@@ -2,29 +2,66 @@
   <header class="header" :class="{ 'header-scrolled': isScrolled }">
     <div class="container">
       <nav class="header-nav">
-        
         <div class="header-link-container">
-          <RouterLink class="header-link" v-for="item in FIRST_HEADER" :key="item.href" :to="item.href">{{ item.label }}</RouterLink>
+          <RouterLink
+            class="header-link"
+            v-for="item in FIRST_HEADER"
+            :key="item.href"
+            :to="item.href"
+            :class="{ 'header-link-actived': isActive(item) }"
+            >{{ item.label }}</RouterLink
+          >
         </div>
-        <div class="header-separator">V<span class="header-separator-icon">💞</span>N</div>
+        <div class="header-separator">
+          V<span class="header-separator-icon">💞</span>N
+        </div>
         <div class="header-link-container">
-          <RouterLink class="header-link" v-for="item in SECOND_HEADER" :key="item.href" :to="item.href">{{ item.label }}</RouterLink>
+          <RouterLink
+            class="header-link"
+            :class="{ 'header-link-actived': isActive(item) }"
+            v-for="item in SECOND_HEADER"
+            :key="item.href"
+            :to="item.href"
+            >{{ item.label }}</RouterLink
+          >
         </div>
-        <button class="hamburger" @click="isMenuOpen = true" aria-label="Open menu">
+        <button
+          class="hamburger"
+          @click="isMenuOpen = true"
+          aria-label="Open menu"
+        >
           <span></span><span></span><span></span>
         </button>
       </nav>
     </div>
 
     <!-- Mobile menu -->
-    <div v-if="isMenuOpen" class="mobile-menu-backdrop" @click.self="isMenuOpen = false">
+    <div
+      v-if="isMenuOpen"
+      class="mobile-menu-backdrop"
+      @click.self="isMenuOpen = false"
+    >
       <div class="mobile-menu">
         <div class="mobile-menu-header">
           <div class="mobile-title">Menu</div>
-          <button class="close-btn" @click="isMenuOpen = false" aria-label="Close menu">✕</button>
+          <button
+            class="close-btn"
+            @click="isMenuOpen = false"
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
         </div>
         <div class="mobile-links">
-          <RouterLink class="mobile-link" v-for="item in header" :key="item.href" :to="item.href" @click="isMenuOpen = false">{{ item.label }}</RouterLink>
+          <RouterLink
+            class="mobile-link"
+            v-for="item in header"
+            :key="item.href"
+            :to="item.href"
+            @click="isMenuOpen = false"
+            :class="{ 'header-link-actived': isActive(item) }"
+            >{{ item.label }}</RouterLink
+          >
         </div>
       </div>
     </div>
@@ -32,43 +69,52 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
-import { header } from '@/data/header.js'
+import { ref, onMounted, onUnmounted } from "vue";
+import { RouterLink, useRoute } from "vue-router";
+import { header } from "@/data/header.js";
 
 const FIRST_HEADER = header.slice(0, 3);
 const SECOND_HEADER = header.slice(3);
 
-const isScrolled = ref(false)
-const isMenuOpen = ref(false)
+const isScrolled = ref(false);
+const isMenuOpen = ref(false);
+
+const route = useRoute();
+
+function isActive(item) {
+  if (!item || !item.href) return false;
+  if (item.href.startsWith("#")) {
+    return route.hash === item.href;
+  }
+}
 
 function handleScroll() {
-  const homeContainer = document.querySelector('.home')
+  const homeContainer = document.querySelector(".home");
   if (homeContainer) {
-    isScrolled.value = homeContainer.scrollTop > 10
+    isScrolled.value = homeContainer.scrollTop > 10;
   } else {
     // Fallback to window scroll if .home not found
-    isScrolled.value = window.scrollY > 10
+    isScrolled.value = window.scrollY > 10;
   }
 }
 
 onMounted(() => {
-  const homeContainer = document.querySelector('.home')
+  const homeContainer = document.querySelector(".home");
   if (homeContainer) {
-    homeContainer.addEventListener('scroll', handleScroll)
+    homeContainer.addEventListener("scroll", handleScroll);
   } else {
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener("scroll", handleScroll);
   }
-})
+});
 
 onUnmounted(() => {
-  const homeContainer = document.querySelector('.home')
+  const homeContainer = document.querySelector(".home");
   if (homeContainer) {
-    homeContainer.removeEventListener('scroll', handleScroll)
+    homeContainer.removeEventListener("scroll", handleScroll);
   } else {
-    window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener("scroll", handleScroll);
   }
-})
+});
 </script>
 
 <style scoped>
@@ -119,6 +165,10 @@ onUnmounted(() => {
   text-decoration: none;
 }
 
+.header-link-actived {
+  border-bottom: 3px solid #d4a5a5;
+}
+
 .header-separator {
   color: #d4a5a5;
   font-size: 40px;
@@ -154,7 +204,7 @@ onUnmounted(() => {
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1500;
   display: flex;
   align-items: flex-start;
@@ -165,7 +215,7 @@ onUnmounted(() => {
   max-width: 360px;
   background: #fff;
   height: 100vh;
-  box-shadow: -10px 0 25px rgba(0,0,0,0.1);
+  box-shadow: -10px 0 25px rgba(0, 0, 0, 0.1);
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -211,9 +261,15 @@ onUnmounted(() => {
     justify-content: space-between;
     padding: 0 16px;
   }
-  .hamburger { display: inline-block; }
-  .header-link-container { display: none; }
+  .hamburger {
+    display: inline-block;
+  }
+  .header-link-container {
+    display: none;
+  }
   /* keep the center separator visible on mobile */
-  .header-separator { display: block; }
+  .header-separator {
+    display: block;
+  }
 }
 </style>
