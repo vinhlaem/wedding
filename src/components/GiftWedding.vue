@@ -215,7 +215,7 @@ onMounted(loadAccount);
   background: #fff;
   text-align: center;
   max-width: 420px;
-  margin: 12px auto;
+  margin: 12px;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 .qr-row {
