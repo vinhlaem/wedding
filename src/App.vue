@@ -21,6 +21,7 @@
     </div>
 
     <Header />
+    <FallingHearts v-if="!loading" />
     <main class="main-content" v-show="closing || !loading">
       <router-view />
     </main>
@@ -32,6 +33,7 @@
 import { ref, onMounted } from "vue";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
+import FallingHearts from "@/components/FallingHearts.vue";
 
 const loading = ref(true);
 const closing = ref(false);
