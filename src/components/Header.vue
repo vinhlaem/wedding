@@ -252,6 +252,23 @@ onUnmounted(() => {
   text-transform: uppercase;
 }
 
+@media (max-width: 900px) {
+  .header-nav {
+    gap: 40px;
+  }
+  .header-link-container {
+    gap: 24px;
+  }
+
+  .header-link {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+}
+
 /* Responsive - show hamburger, hide desktop links at <= 765px */
 @media (max-width: 765px) {
   .header {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-page">
     <Banner />
     <QuoteSection />
     <Profile />
@@ -9,6 +9,7 @@
     <WeddingProgram />
     <RSVPSection />
     <GiftWedding />
+    <FixAction />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import WeddingProgram from "@/components/WeddingProgram.vue";
 import RSVPSection from "@/components/RSVPSection.vue";
 import { onMounted, onUnmounted } from "vue";
 import GiftWedding from "@/components/GiftWedding.vue";
+import FixAction from "@/components/FixAction.vue";
 
 let observer;
 
@@ -46,4 +48,8 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.home-page {
+  position: relative;
+}
+</style>

@@ -1,38 +1,40 @@
 <template>
-  <TitleSection title="Quà cưới" />
-  <div class="accounts-grid">
-    <div v-if="accounts.length === 0" class="gift-card">
-      <div class="text-sm text-gray-500">Chưa có thông tin tài khoản.</div>
-    </div>
+  <section id="gift" class="gift-section reveal">
+    <TitleSection title="Quà cưới" />
+    <div class="accounts-grid">
+      <div v-if="accounts.length === 0" class="gift-card">
+        <div class="text-sm text-gray-500">Chưa có thông tin tài khoản.</div>
+      </div>
 
-    <div class="accounts-row" v-else>
-      <div class="gift-card" v-for="acc in accounts" :key="acc._id">
-        <div class="qr-row">
-          <div class="qr-item" v-if="acc.qrData">
-            <img :src="acc.qrData" alt="VietQR" />
+      <div class="accounts-row" v-else>
+        <div class="gift-card" v-for="acc in accounts" :key="acc._id">
+          <div class="qr-row">
+            <div class="qr-item" v-if="acc.qrData">
+              <img :src="acc.qrData" alt="VietQR" />
+            </div>
+            <div class="qr-item qr-placeholder" v-else>
+              <span>QR không khả dụng</span>
+            </div>
           </div>
-          <div class="qr-item qr-placeholder" v-else>
-            <span>QR không khả dụng</span>
-          </div>
-        </div>
 
-        <div class="account-info">
-          <div class="info-row">
-            <strong>Ngân hàng:</strong>
-            <span>{{ acc.bankName || "---" }}</span>
-          </div>
-          <div class="info-row">
-            <strong>Số tài khoản:</strong>
-            <span>{{ acc.accountNumber || "---" }}</span>
-          </div>
-          <div class="info-row">
-            <strong>Tên tài khoản:</strong>
-            <span>{{ acc.accountHolder || "---" }}</span>
+          <div class="account-info">
+            <div class="info-row">
+              <strong>Ngân hàng:</strong>
+              <span>{{ acc.bankName || "---" }}</span>
+            </div>
+            <div class="info-row">
+              <strong>Số tài khoản:</strong>
+              <span>{{ acc.accountNumber || "---" }}</span>
+            </div>
+            <div class="info-row">
+              <strong>Tên tài khoản:</strong>
+              <span>{{ acc.accountHolder || "---" }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
@@ -209,6 +211,10 @@ const loadAccount = async () => {
 onMounted(loadAccount);
 </script>
 <style scoped>
+.gift-section {
+  background: #fff;
+  padding: 80px 20px;
+}
 .gift-card {
   border-radius: 12px;
   padding: 18px;
@@ -260,5 +266,11 @@ onMounted(loadAccount);
 .info-row strong {
   display: inline-block;
   width: 120px;
+}
+
+@media (max-width: 768px) {
+  .gift-section {
+    padding: 60px 16px;
+  }
 }
 </style>
