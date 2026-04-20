@@ -78,7 +78,7 @@ onMounted(async () => {
   // Fetch from API; fall back to local assets on error
   loading.value = true;
   try {
-    const items = await fetchMedia("gallery");
+    const items = await fetchMedia("gallery", undefined, 5);
     if (items && items.length > 0) {
       galleryImages.value = items.map((item) => item.imageUrl);
     }
