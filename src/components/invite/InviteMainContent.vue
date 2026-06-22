@@ -1,0 +1,219 @@
+<template>
+  <main id="invite-main" class="invite-main" :style="mainStyle">
+    <InviteBannerSection />
+    <InviteCoupleNameSection :config="config" />
+    <Gallery title="ALBUM ẢNH CƯỚI" variant="invite" />
+    <InviteWeddingInfoSection :config="config" />
+    <InviteCeremonySection :config="config" :place="place" :place-info="placeInfo" />
+    <InvitePartySection :config="config" :place-info="placeInfo" />
+    <InviteCalendarSection :config="config" />
+    <InviteMapSection :place-info="placeInfo" />
+    <InviteScheduleSection :schedule="config.schedule" />
+    <RSVPSection title="Sổ lưu bút" :default-name="guestName" variant="invite" />
+    <GiftWedding variant="invite" />
+    <p class="invite-main__thanks">
+      Sự hiện diện của quý khách là niềm vinh hạnh của gia đình chúng tôi!
+    </p>
+    <RouterLink class="invite-main__home-link" to="/">
+      Xem thêm thông tin
+    </RouterLink>
+    <FixAction music-only />
+  </main>
+</template>
+
+<script setup>
+import Gallery from "@/components/Gallery.vue";
+import RSVPSection from "@/components/RSVPSection.vue";
+import GiftWedding from "@/components/GiftWedding.vue";
+import FixAction from "@/components/FixAction.vue";
+import InviteBannerSection from "@/components/invite/InviteBannerSection.vue";
+import InviteCoupleNameSection from "@/components/invite/InviteCoupleNameSection.vue";
+import InviteWeddingInfoSection from "@/components/invite/InviteWeddingInfoSection.vue";
+import InviteCeremonySection from "@/components/invite/InviteCeremonySection.vue";
+import InvitePartySection from "@/components/invite/InvitePartySection.vue";
+import InviteCalendarSection from "@/components/invite/InviteCalendarSection.vue";
+import InviteMapSection from "@/components/invite/InviteMapSection.vue";
+import InviteScheduleSection from "@/components/invite/InviteScheduleSection.vue";
+import bgFull from "@/assets/images/invite/bg-full.jpg";
+
+defineProps({
+  config: {
+    type: Object,
+    required: true,
+  },
+  guestName: {
+    type: String,
+    required: true,
+  },
+  place: {
+    type: String,
+    required: true,
+  },
+  placeInfo: {
+    type: Object,
+    required: true,
+  },
+});
+
+const mainStyle = {
+  backgroundImage: `url(${bgFull})`,
+};
+</script>
+
+<style>
+.invite-main {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: repeat-y;
+  color: #b94a58;
+  overflow: hidden;
+  --invite-serif: "Noto Serif", "Times New Roman", serif;
+  --invite-sans: "Mulish", Arial, sans-serif;
+  font-family: var(--invite-serif);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+
+.invite-main .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.invite-main :is(.invite-heading, .invite-date-block, .invite-main__thanks, .invite-wedding-info, .invite-calendar, .invite-map, .invite-schedule, .invite-party, .rsvp-section--invite, .gift-section--invite) {
+  font-family: var(--invite-serif);
+}
+
+.invite-main :is(input, textarea, button) {
+  font-family: var(--invite-sans);
+}
+.invite-section {
+  position: relative;
+  z-index: 1;
+  padding: clamp(40px, 5.5vw, 76px) clamp(20px, 5vw, 72px);
+}
+
+.invite-heading {
+  margin: 0;
+  color: #b94a58;
+  font-family: var(--invite-serif);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.invite-date-block {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  margin-top: clamp(46px, 8vw, 76px);
+  font-family: var(--invite-serif);
+}
+
+.invite-date-block p,
+.invite-date-block small {
+  margin: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.invite-date-block strong {
+  font-size: clamp(1.2rem, 2.7vw, 1.65rem);
+  font-weight: 500;
+}
+
+.invite-date-block time {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+
+.invite-date-block__date {
+  display: inline-grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.invite-date-block__date span {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+.invite-date-block__date strong {
+  padding: 0 18px;
+  border-left: 1px solid rgba(185, 74, 88, 0.48);
+  border-right: 1px solid rgba(185, 74, 88, 0.48);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+}
+
+.invite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 12px 30px;
+  background: #b94a58;
+  color: #fff;
+  font-family: var(--invite-serif);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(185, 74, 88, 0.22);
+}
+
+.invite-main__home-link {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 72px;
+  border-radius: 999px;
+  padding: 13px 30px;
+  background: #b94a58;
+  color: #fff;
+  font-family: var(--invite-serif);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 14px 28px rgba(185, 74, 88, 0.24);
+}
+
+.invite-main__home-link:hover {
+  background: #a83e4b;
+}
+.invite-main__thanks {
+  margin: 0;
+  padding: 0 20px 64px;
+  text-align: center;
+  font-family: var(--invite-serif);
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+}
+
+.invite-main .gallery-section,
+.invite-main .rsvp-section,
+.invite-main .gift-section {
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  .invite-main {
+    max-width: 100%;
+    background-size: cover;
+    background-repeat: repeat-y;
+  }
+}
+
+@media (max-width: 480px) {
+  .invite-section {
+    padding: 36px 18px;
+  }
+
+  .invite-date-block__date {
+    gap: 10px;
+  }
+}
+</style>

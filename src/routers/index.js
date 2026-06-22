@@ -1,11 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/Home.vue';
+import InvitePage from '../pages/InvitePage.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/invite',
+    name: 'Invite',
+    component: InvitePage,
+    meta: { hideChrome: true },
   },
 ]
 

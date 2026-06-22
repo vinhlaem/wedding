@@ -20,23 +20,26 @@
       </div>
     </div>
 
-    <Header />
+    <Header v-if="!hideChrome" />
     <FallingHearts v-if="!loading" />
     <main class="main-content" v-show="closing || !loading">
       <router-view />
     </main>
-    <Footer v-show="closing || !loading" />
+    <Footer v-if="!hideChrome" v-show="closing || !loading" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { computed, ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import FallingHearts from "@/components/FallingHearts.vue";
 
 const loading = ref(true);
 const closing = ref(false);
+const route = useRoute();
+const hideChrome = computed(() => Boolean(route.meta.hideChrome));
 
 onMounted(() => {
   setTimeout(() => {

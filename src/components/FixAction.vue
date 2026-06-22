@@ -4,8 +4,8 @@
       <IconMuted v-if="isPlaying" />
       <IconUnmute v-else />
     </button>
-    <button @click="scrollTo('gift')" class="action"><IconGift /></button>
-    <button @click="scrollTo('rsvp')" class="action"><IconMail /></button>
+    <button v-if="!musicOnly" @click="scrollTo('gift')" class="action"><IconGift /></button>
+    <button v-if="!musicOnly" @click="scrollTo('rsvp')" class="action"><IconMail /></button>
     <audio ref="audioRef" :src="musicSrc" loop preload="auto"></audio>
   </div>
 </template>
@@ -18,8 +18,16 @@ import IconUnmute from "./icons/IconUnmute.vue";
 import IconMail from "./icons/IconMail.vue";
 import musicSrc from "@/assets/music/wedding-music.mp3";
 
+defineProps({
+  musicOnly: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 const audioRef = ref(null);
 const isPlaying = ref(false);
+let startAudioHandler;
 
 function toggleAudio() {
   const a = audioRef.value;
@@ -41,17 +49,26 @@ function toggleAudio() {
 }
 
 onMounted(() => {
-  const startAudio = () => {
+  startAudioHandler = () => {
     const a = audioRef.value;
     if (a) {
-      a.play();
-      isPlaying.value = true;
+      a.play()
+        .then(() => {
+          isPlaying.value = true;
+        })
+        .catch(() => {
+          isPlaying.value = false;
+        });
     }
 
-    window.removeEventListener("click", startAudio);
+    window.removeEventListener("click", startAudioHandler);
   };
 
-  window.addEventListener("click", startAudio);
+  window.addEventListener("click", startAudioHandler);
+});
+
+onUnmounted(() => {
+  if (startAudioHandler) window.removeEventListener("click", startAudioHandler);
 });
 
 function scrollTo(id) {

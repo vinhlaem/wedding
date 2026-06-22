@@ -1,7 +1,11 @@
 <template>
-  <section id="gallery" class="gallery-section reveal section-anchor">
+  <section
+    id="gallery"
+    class="gallery-section reveal section-anchor"
+    :class="`gallery-section--${variant}`"
+  >
     <div class="gallery-container">
-      <TitleSection title="Album Ảnh" />
+      <TitleSection :title="title" />
 
       <div class="gallery-grid">
         <div
@@ -39,6 +43,17 @@
 import { ref, onMounted } from "vue";
 import TitleSection from "@/components/common/TitleSection.vue";
 import { fetchMedia } from "@/api/media";
+
+defineProps({
+  title: {
+    type: String,
+    default: "Album Ảnh",
+  },
+  variant: {
+    type: String,
+    default: "default",
+  },
+});
 
 // Local asset fallback map (still bundled by Vite for offline use)
 import galleryData from "@/data/gallery.json";
@@ -404,6 +419,50 @@ onMounted(async () => {
 
   .lightbox-next {
     right: 15px;
+  }
+}
+.gallery-section--invite {
+  padding: 0 clamp(20px, 5vw, 72px) clamp(56px, 8vw, 112px);
+  color: #b94a58;
+}
+
+.gallery-section--invite .gallery-container {
+  max-width: 640px;
+}
+
+.gallery-section--invite :deep(.quote-header) {
+  display: none;
+}
+
+.gallery-section--invite .gallery-grid {
+  margin-top: 0;
+  min-height: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(190px, 1fr));
+  gap: 18px;
+}
+
+.gallery-section--invite .gallery-item {
+  grid-column: auto;
+  grid-row: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.gallery-section--invite .gallery-item:nth-child(n + 5) {
+  display: none;
+}
+
+@media (max-width: 580px) {
+  .gallery-section--invite {
+    padding: 0 18px 48px;
+  }
+
+  .gallery-section--invite .gallery-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    gap: 12px;
   }
 }
 </style>

@@ -1,7 +1,11 @@
 <template>
-  <section id="rsvp" class="rsvp-section reveal section-anchor">
+  <section
+    id="rsvp"
+    class="rsvp-section reveal section-anchor"
+    :class="`rsvp-section--${variant}`"
+  >
     <div class="rsvp-container">
-      <TitleSection title="Gửi lời chúc" />
+      <TitleSection :title="title" />
 
       <div class="rsvp-grid">
         <!-- Form Card -->
@@ -68,7 +72,16 @@
               </p>
             </div>
           </div>
-          <div v-if="loadingMore" class="loading">Đang tải...</div>
+          <div v-if="loadingMore && variant !== 'invite'" class="loading rsvp-loading-more">Đang tải...</div>
+          <button
+            v-if="variant === 'invite' && currentPage < totalPages"
+            class="rsvp-load-more-button"
+            type="button"
+            :disabled="loadingMore"
+            @click="fetchMoreMessages"
+          >
+            {{ loadingMore ? "Đang tải..." : "Xem thêm lời chúc" }}
+          </button>
         </div>
       </div>
     </div>
@@ -76,13 +89,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import api from "@/api/axios";
 import rsvpData from "@/data/rsvp.json";
 import TitleSection from "@/components/common/TitleSection.vue";
 
-const title = ref(rsvpData.title);
-const name = ref("");
+const props = defineProps({
+  title: {
+    type: String,
+    default: rsvpData.title,
+  },
+  defaultName: {
+    type: String,
+    default: "",
+  },
+  variant: {
+    type: String,
+    default: "default",
+  },
+});
+
+const title = ref(props.title);
+const name = ref(props.defaultName);
 const message = ref("");
 const messages = ref([]);
 const loading = ref(false);
@@ -93,6 +121,13 @@ const totalPages = ref(1);
 const limit = ref(3);
 
 const messageWrapRef = ref(null);
+
+watch(
+  () => props.defaultName,
+  (value) => {
+    if (!name.value) name.value = value;
+  },
+);
 
 const handleScroll = () => {
   const container = messageWrapRef.value;
@@ -409,9 +444,135 @@ onMounted(() => {
   }
 }
 
+
 @media (max-width: 480px) {
   .rsvp-title {
     font-size: 1.6rem;
+  }
+}
+.rsvp-section--invite {
+  padding: clamp(56px, 8vw, 112px) clamp(20px, 5vw, 72px);
+  color: #b94a58;
+}
+
+.rsvp-section--invite .rsvp-container {
+  max-width: 640px;
+}
+
+.rsvp-section--invite :deep(.quote-header) {
+  display: none;
+}
+
+.rsvp-section--invite::before {
+  content: "SỔ LƯU BÚT";
+  display: block;
+  margin-bottom: 34px;
+  text-align: center;
+  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: 0.1em;
+}
+
+.rsvp-section--invite .rsvp-grid {
+  display: flex;
+  flex-direction: column;
+  max-height: none;
+}
+
+.rsvp-section--invite .rsvp-card,
+.rsvp-section--invite .rsvp-message-wrap {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(185, 74, 88, 0.28);
+  border-radius: 8px;
+  box-shadow: 0 18px 38px rgba(117, 65, 65, 0.1);
+}
+
+.rsvp-section--invite .rsvp-title,
+.rsvp-section--invite .rsvp-label,
+.rsvp-section--invite .rsvp-message-item-name,
+.rsvp-section--invite .rsvp-message-item-message,
+.rsvp-section--invite .rsvp-message-item-time {
+  color: #b94a58;
+}
+
+.rsvp-section--invite .rsvp-input,
+.rsvp-section--invite .rsvp-textarea {
+  border: 1px solid rgba(185, 74, 88, 0.65);
+  border-radius: 6px;
+  padding: 13px 16px;
+  color: #b94a58;
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.rsvp-section--invite .rsvp-button {
+  align-self: flex-end;
+  background: #b94a58;
+  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  text-transform: uppercase;
+}
+
+.rsvp-section--invite .rsvp-button span:not(.btn-spinner)::after {
+  content: " lời chúc";
+}
+
+.rsvp-section--invite .rsvp-message-wrap {
+  max-height: 520px;
+}
+
+.rsvp-section--invite .rsvp-message-item {
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(185, 74, 88, 0.24);
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+
+
+.rsvp-load-more-button {
+  display: none;
+}
+
+.rsvp-section--invite .rsvp-message-wrap {
+  display: flex;
+  flex-direction: column;
+  height: min(520px, 75vh);
+  max-height: 520px;
+}
+
+.rsvp-section--invite .rsvp-message-item-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.rsvp-section--invite .rsvp-loading-more {
+  height: auto;
+  padding: 10px 0 0;
+  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+}
+
+.rsvp-section--invite .rsvp-load-more-button {
+  display: inline-flex;
+  align-self: center;
+  justify-content: center;
+  margin-top: 18px;
+  border: 1px solid rgba(185, 74, 88, 0.36);
+  border-radius: 999px;
+  padding: 10px 22px;
+  background: rgba(255, 255, 255, 0.56);
+  color: #b94a58;
+  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rsvp-section--invite .rsvp-load-more-button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
+@media (max-width: 480px) {
+  .rsvp-section--invite {
+    padding: 48px 18px;
   }
 }
 </style>
