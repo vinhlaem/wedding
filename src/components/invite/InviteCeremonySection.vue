@@ -94,7 +94,7 @@ const paddedMonth = computed(() =>
 @media (max-width: 640px) {
   .invite-ceremony__couple h3,
   .invite-ceremony__couple span {
-    font-size: clamp(2.4rem, 12vw, 3.7rem);
+    font-size: clamp(2.4rem, 11vw, 3.7rem);
   }
 }
 </style>

@@ -94,7 +94,7 @@ const cardStyle = {
 .invite-opening__names {
   margin: 18px 0 12px;
   font-family: var(--font-couple);
-  font-size: clamp(2.4rem, 6vw, 3.5rem);
+  font-size: clamp(2rem, 6vw, 3.5rem);
   line-height: 1.05;
 }
 
@@ -146,8 +146,8 @@ const cardStyle = {
   border-radius: 12px;
   background: rgba(185, 74, 88, 0.08);
   font-family: var(--font-body);
-  font-size: clamp(1.05rem, 3.5vw, 1.35rem);
-  font-weight: 700;
+  font-size: clamp(1.2rem, 3.5vw, 1.35rem);
+  font-weight: 900;
 }
 
 .invite-opening__button {

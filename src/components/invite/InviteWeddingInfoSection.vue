@@ -35,6 +35,10 @@ defineProps({
   text-align: center;
 }
 
+.invite-wedding-info .invite-heading {
+  font-size: clamp(1.65rem, 4.6vw, 2.35rem);
+}
+
 .invite-wedding-info__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -56,13 +60,13 @@ defineProps({
 .invite-wedding-info__label {
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 1rem;
+  font-size: clamp(1.12rem, 3.2vw, 1.35rem);
   font-weight: 900;
 }
 
 .invite-wedding-info__parents {
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: clamp(1.25rem, 3.6vw, 1.55rem);
 }
 
 .invite-wedding-info__parents {
@@ -72,14 +76,14 @@ defineProps({
 .invite-wedding-info__family h3 {
   margin: 10px 0 0;
   font-family: var(--font-body);
-  font-size: clamp(1.2rem, 2.7vw, 2rem);
+  font-size: clamp(1.42rem, 4.3vw, 2.35rem);
   font-weight: 900;
 }
 
 .invite-wedding-info__family p:last-child {
   margin-top: 18px;
   line-height: 1.7;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-size: clamp(1.02rem, 3vw, 1.28rem);
   font-family: var(--font-body);
   font-weight: 700;
 }
@@ -87,6 +91,12 @@ defineProps({
 @media (max-width: 680px) {
   .invite-wedding-info__grid {
     grid-template-columns: 1fr;
+    gap: 46px;
+    margin-top: 48px;
+  }
+
+  .invite-wedding-info__family {
+    padding: 8px 4px;
   }
 }
 </style>

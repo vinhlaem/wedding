@@ -43,6 +43,7 @@ import InviteCalendarSection from "@/components/invite/InviteCalendarSection.vue
 import InviteMapSection from "@/components/invite/InviteMapSection.vue";
 import InviteScheduleSection from "@/components/invite/InviteScheduleSection.vue";
 import bgFull from "@/assets/images/invite/bg-full.jpg";
+import bgSoft from "@/assets/images/invite/bg.webp";
 
 defineProps({
   config: {
@@ -64,7 +65,8 @@ defineProps({
 });
 
 const mainStyle = {
-  backgroundImage: `url(${bgFull})`,
+  "--invite-bg-full": "url(" + bgFull + ")",
+  "--invite-bg-soft": "url(" + bgSoft + ")",
 };
 </script>
 
@@ -75,6 +77,7 @@ const mainStyle = {
   max-width: 960px;
   min-height: 100vh;
   margin: 0 auto;
+  background-image: var(--invite-bg-full);
   background-size: 100% auto;
   background-position: top center;
   background-repeat: repeat-y;
@@ -85,6 +88,23 @@ const mainStyle = {
   text-rendering: optimizeLegibility;
 }
 
+.invite-main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--invite-bg-soft);
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: repeat-y;
+  opacity: 0.28;
+}
+
+.invite-main > * {
+  position: relative;
+  z-index: 1;
+}
 .invite-main .reveal {
   opacity: 1 !important;
   transform: none !important;
