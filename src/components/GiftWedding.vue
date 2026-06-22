@@ -1,5 +1,9 @@
 <template>
-  <section id="gift" class="gift-section reveal" :class="`gift-section--${variant}`">
+  <section
+    id="gift"
+    class="gift-section reveal"
+    :class="`gift-section--${variant}`"
+  >
     <template v-if="variant !== 'invite'">
       <TitleSection title="Quà cưới" />
       <div class="accounts-grid">
@@ -48,21 +52,41 @@
     </template>
 
     <div v-if="showModal" class="gift-modal" @click.self="closeGiftModal">
-      <article class="gift-modal__dialog" role="dialog" aria-modal="true" aria-label="Phong bao mừng cưới">
-        <button class="gift-modal__close" type="button" @click="closeGiftModal">×</button>
+      <article
+        class="gift-modal__dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Phong bao mừng cưới"
+      >
+        <button class="gift-modal__close" type="button" @click="closeGiftModal">
+          ×
+        </button>
         <h2>PHONG BAO MỪNG CƯỚI</h2>
 
         <div v-if="modalAccounts.length" class="gift-modal__grid">
-          <div class="gift-modal__account" v-for="acc in modalAccounts" :key="acc._id || acc.accountNumber">
-            <p class="gift-modal__role">{{ acc.role || acc.accountHolder || "Tài khoản" }}</p>
+          <div
+            class="gift-modal__account"
+            v-for="acc in modalAccounts"
+            :key="acc._id || acc.accountNumber"
+          >
+            <p class="gift-modal__role">
+              {{ acc.role || acc.accountHolder || "Tài khoản" }}
+            </p>
             <div class="gift-modal__qr" v-if="acc.qrData">
               <img :src="acc.qrData" alt="VietQR" />
             </div>
-            <div class="gift-modal__qr gift-modal__qr--empty" v-else>QR không khả dụng</div>
+            <div class="gift-modal__qr gift-modal__qr--empty" v-else>
+              QR không khả dụng
+            </div>
             <p>{{ acc.bankName || "---" }}</p>
             <p>{{ acc.accountNumber || "---" }}</p>
             <strong>{{ acc.accountHolder || "---" }}</strong>
-            <button v-if="acc.qrData" class="gift-modal__save" type="button" @click="downloadQR(acc)">
+            <button
+              v-if="acc.qrData"
+              class="gift-modal__save"
+              type="button"
+              @click="downloadQR(acc)"
+            >
               Lưu QR
             </button>
           </div>
@@ -173,7 +197,9 @@ const buildVietQR = ({ bankBin, accountNumber, accountName }) => {
   const name = removeAccents(accountName || "UNKNOWN").substring(0, 25);
   const consumerAccount = tlv("00", bankBin) + tlv("01", accountNumber);
   const merchantAccountInfo =
-    tlv("00", "A000000727") + tlv("01", consumerAccount) + tlv("02", "QRIBFTTA");
+    tlv("00", "A000000727") +
+    tlv("01", consumerAccount) +
+    tlv("02", "QRIBFTTA");
   const field38 = tlv("38", merchantAccountInfo);
 
   let payload =
@@ -322,9 +348,9 @@ onMounted(loadAccount);
 .gift-invite__title,
 .gift-modal__dialog h2 {
   margin: 0 0 28px;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-heading);
   font-size: clamp(1.35rem, 3vw, 2rem);
-  font-weight: 500;
+  font-weight: 900;
   letter-spacing: 0.1em;
 }
 
@@ -354,7 +380,7 @@ onMounted(loadAccount);
 }
 
 .gift-envelope__hint {
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
 }
 
 .gift-envelope__coin {
@@ -416,7 +442,7 @@ onMounted(loadAccount);
 
 .gift-modal__account {
   text-align: center;
-  font-family: var(--font-mulish);
+  font-family: var(--font-form);
 }
 
 .gift-modal__role {

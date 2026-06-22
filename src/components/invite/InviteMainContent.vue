@@ -4,12 +4,20 @@
     <InviteCoupleNameSection :config="config" />
     <Gallery title="ALBUM ẢNH CƯỚI" variant="invite" />
     <InviteWeddingInfoSection :config="config" />
-    <InviteCeremonySection :config="config" :place="place" :place-info="placeInfo" />
+    <InviteCeremonySection
+      :config="config"
+      :place="place"
+      :place-info="placeInfo"
+    />
     <InvitePartySection :config="config" :place-info="placeInfo" />
     <InviteCalendarSection :config="config" />
     <InviteMapSection :place-info="placeInfo" />
     <InviteScheduleSection :schedule="config.schedule" />
-    <RSVPSection title="Sổ lưu bút" :default-name="guestName" variant="invite" />
+    <RSVPSection
+      title="Sổ lưu bút"
+      :default-name="guestName"
+      variant="invite"
+    />
     <GiftWedding variant="invite" />
     <p class="invite-main__thanks">
       Sự hiện diện của quý khách là niềm vinh hạnh của gia đình chúng tôi!
@@ -72,13 +80,10 @@ const mainStyle = {
   background-repeat: repeat-y;
   color: #b94a58;
   overflow: hidden;
-  --invite-serif: "Noto Serif", "Times New Roman", serif;
-  --invite-sans: "Mulish", Arial, sans-serif;
-  font-family: var(--invite-serif);
+  font-family: var(--font-body);
   font-kerning: normal;
   text-rendering: optimizeLegibility;
 }
-
 
 .invite-main .reveal {
   opacity: 1 !important;
@@ -86,12 +91,27 @@ const mainStyle = {
   transition: none !important;
 }
 
-.invite-main :is(.invite-heading, .invite-date-block, .invite-main__thanks, .invite-wedding-info, .invite-calendar, .invite-map, .invite-schedule, .invite-party, .rsvp-section--invite, .gift-section--invite) {
-  font-family: var(--invite-serif);
+.invite-main
+  :is(
+    .invite-date-block,
+    .invite-main__thanks,
+    .invite-wedding-info,
+    .invite-calendar,
+    .invite-map,
+    .invite-schedule,
+    .invite-party,
+    .rsvp-section--invite,
+    .gift-section--invite
+  ) {
+  font-family: var(--font-body);
 }
 
+.invite-main
+  :is(.invite-heading, .rsvp-section--invite::before, .gift-invite__title) {
+  font-family: var(--font-heading);
+}
 .invite-main :is(input, textarea, button) {
-  font-family: var(--invite-sans);
+  font-family: var(--font-form);
 }
 .invite-section {
   position: relative;
@@ -102,9 +122,9 @@ const mainStyle = {
 .invite-heading {
   margin: 0;
   color: #b94a58;
-  font-family: var(--invite-serif);
+  font-family: var(--font-heading);
   font-size: clamp(1.35rem, 3vw, 2rem);
-  font-weight: 500;
+  font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -114,7 +134,7 @@ const mainStyle = {
   gap: 18px;
   justify-items: center;
   margin-top: clamp(46px, 8vw, 76px);
-  font-family: var(--invite-serif);
+  font-family: var(--font-body);
 }
 
 .invite-date-block p,
@@ -122,15 +142,18 @@ const mainStyle = {
   margin: 0;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  font-weight: 900;
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
 }
 
 .invite-date-block strong {
-  font-size: clamp(1.2rem, 2.7vw, 1.65rem);
-  font-weight: 500;
+  font-size: clamp(1.2rem, 2.7vw, 1.8rem);
+  font-weight: 900;
 }
 
 .invite-date-block time {
-  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 500;
 }
 
 .invite-date-block__date {
@@ -141,8 +164,9 @@ const mainStyle = {
 }
 
 .invite-date-block__date span {
-  font-size: 0.95rem;
+  font-size: 1.2rem;
   text-transform: uppercase;
+  font-weight: 900;
 }
 
 .invite-date-block__date strong {
@@ -160,7 +184,7 @@ const mainStyle = {
   padding: 12px 30px;
   background: #b94a58;
   color: #fff;
-  font-family: var(--invite-serif);
+  font-family: var(--font-form);
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 12px 24px rgba(185, 74, 88, 0.22);
@@ -176,7 +200,7 @@ const mainStyle = {
   padding: 13px 30px;
   background: #b94a58;
   color: #fff;
-  font-family: var(--invite-serif);
+  font-family: var(--font-form);
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 14px 28px rgba(185, 74, 88, 0.24);
@@ -189,8 +213,9 @@ const mainStyle = {
   margin: 0;
   padding: 0 20px 64px;
   text-align: center;
-  font-family: var(--invite-serif);
+  font-family: var(--font-body);
   font-size: clamp(1rem, 2.4vw, 1.25rem);
+  font-weight: 900;
 }
 
 .invite-main .gallery-section,

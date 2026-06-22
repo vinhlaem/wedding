@@ -23,10 +23,18 @@ import Gallery from "@/components/Gallery.vue";
 import WeddingProgram from "@/components/WeddingProgram.vue";
 import RSVPSection from "@/components/RSVPSection.vue";
 import { onMounted, onUnmounted } from "vue";
+import { useSeoMeta } from "@/composables/useSeoMeta";
 import GiftWedding from "@/components/GiftWedding.vue";
 import FixAction from "@/components/FixAction.vue";
 
 let observer;
+
+useSeoMeta({
+  title: "Đám cưới Vinh & Nguyệt | 30 tháng 5, 2027",
+  description: "Website cưới của Trương Đình Vinh & Võ Thị Minh Nguyệt: câu chuyện, album ảnh, lịch trình, lời chúc và thông tin tiệc cưới ngày 30 tháng 5, 2027.",
+  url: typeof window !== "undefined" ? window.location.origin + "/" : undefined,
+  image: "/og.jpg",
+});
 
 onMounted(() => {
   const options = { threshold: 0.15 };

@@ -52,11 +52,14 @@ defineProps({
   gap: 28px;
   min-height: 68px;
   color: #b94a58;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  text-transform: uppercase;
 }
 
 .invite-schedule__item time {
   text-align: right;
+  font-weight: 900;
 }
 
 .invite-schedule__item span {
@@ -67,11 +70,13 @@ defineProps({
   background: #b94a58;
   box-shadow: 0 0 0 4px rgba(185, 74, 88, 0.12);
   z-index: 1;
+  font-weight: 900;
 }
 
 .invite-schedule__item p {
   margin: 0;
   text-align: left;
+  font-weight: 900;
 }
 
 @media (max-width: 420px) {

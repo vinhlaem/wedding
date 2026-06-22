@@ -208,14 +208,14 @@ function mapUrl(itemOrDesc) {
 .program-title {
   font-family: var(--font-mulish);
   font-size: 2.2rem;
-  color: #000;
+  color: var(--wedding-text);
   margin: 12px 0 12px 0;
   font-weight: 700;
 }
 
 .program-subtitle {
   font-family: var(--font-mulish);
-  color: #666;
+  color: var(--wedding-text);
   line-height: 1.8;
   max-width: 760px;
   margin: 0 auto 40px auto;
@@ -278,7 +278,7 @@ function mapUrl(itemOrDesc) {
 .program-name {
   font-family: var(--font-mulish);
   font-size: 1.4rem;
-  color: #d45f84;
+  color: var(--wedding-primary);
   font-weight: 700;
   margin: 0 0 8px 0;
 }
@@ -306,7 +306,7 @@ function mapUrl(itemOrDesc) {
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   display: block;
 }
 .meta-icon svg {
@@ -315,7 +315,7 @@ function mapUrl(itemOrDesc) {
 
 .meta-text {
   font-family: var(--font-mulish);
-  color: #666;
+  color: var(--wedding-text);
   font-size: 0.95rem;
   line-height: 1.6;
   display: flex;

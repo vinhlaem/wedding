@@ -23,7 +23,7 @@
               xmlns="http://www.w3.org/2000/svg"
             >
               <circle cx="40" cy="40" r="40" fill="rgba(255, 255, 255, 0.9)" />
-              <path d="M32 24L32 56L56 40L32 24Z" fill="#d4a5a5" />
+              <path d="M32 24L32 56L56 40L32 24Z" fill="var(--wedding-primary)" />
             </svg>
           </div>
         </div>

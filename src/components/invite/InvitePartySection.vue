@@ -40,7 +40,9 @@ const props = defineProps({
   },
 });
 
-const paddedMonth = computed(() => String(props.config.calendar.month).padStart(2, "0"));
+const paddedMonth = computed(() =>
+  String(props.config.calendar.month).padStart(2, "0"),
+);
 </script>
 
 <style scoped>
@@ -56,22 +58,23 @@ const paddedMonth = computed(() => String(props.config.calendar.month).padStart(
 }
 
 .invite-party__times div {
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
 }
 
 .invite-party__times span,
 .invite-party__times strong {
   display: block;
+  font-weight: 900;
 }
 
 .invite-party__times span {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   letter-spacing: 0.08em;
 }
 
 .invite-party__times strong {
   margin-top: 6px;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
 }
 
 @media (max-width: 420px) {

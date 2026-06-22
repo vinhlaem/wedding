@@ -10,7 +10,7 @@
       <div class="rsvp-grid">
         <!-- Form Card -->
         <div class="rsvp-card">
-          <h2 class="rsvp-title">{{ title }}</h2>
+          <h2 v-if="variant !== 'invite'">{{ title }}</h2>
 
           <form class="rsvp-form" @submit.prevent="sendMessage">
             <label class="rsvp-label"
@@ -72,7 +72,12 @@
               </p>
             </div>
           </div>
-          <div v-if="loadingMore && variant !== 'invite'" class="loading rsvp-loading-more">Đang tải...</div>
+          <div
+            v-if="loadingMore && variant !== 'invite'"
+            class="loading rsvp-loading-more"
+          >
+            Đang tải...
+          </div>
           <button
             v-if="variant === 'invite' && currentPage < totalPages"
             class="rsvp-load-more-button"
@@ -251,7 +256,7 @@ onMounted(() => {
 .rsvp-title {
   font-family: var(--font-dancing-script);
   font-size: 2rem;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   margin: 0 0 22px 0;
 }
 
@@ -263,7 +268,7 @@ onMounted(() => {
 
 .rsvp-label {
   font-family: var(--font-mulish);
-  color: #555;
+  color: var(--wedding-text);
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
@@ -295,19 +300,19 @@ onMounted(() => {
 
 .rsvp-button {
   margin-top: 6px;
-  background: #d4a5a5;
+  background: var(--wedding-primary);
   color: #fff;
   border: none;
   border-radius: 999px;
   padding: 12px 22px;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(212, 165, 165, 0.35);
 }
 
 .rsvp-button:hover {
-  background: #c49595;
+  background: var(--wedding-primary-hover);
 }
 
 .btn-spinner {
@@ -350,13 +355,13 @@ onMounted(() => {
 }
 
 .rsvp-message-item-container::-webkit-scrollbar-thumb {
-  background-color: #d4a5a5;
+  background-color: var(--wedding-primary);
   border-radius: 12px;
   border: 2px solid #f0e6e6;
 }
 
 .rsvp-message-item-container::-webkit-scrollbar-thumb:hover {
-  background-color: #c49595;
+  background-color: var(--wedding-primary-hover);
 }
 
 .rsvp-message-item {
@@ -399,7 +404,7 @@ onMounted(() => {
 
 .loading-spinner {
   border: 10px solid #f3f3f3;
-  border-top: 10px solid #d4a5a5;
+  border-top: 10px solid var(--wedding-primary);
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -444,7 +449,6 @@ onMounted(() => {
   }
 }
 
-
 @media (max-width: 480px) {
   .rsvp-title {
     font-size: 1.6rem;
@@ -468,9 +472,10 @@ onMounted(() => {
   display: block;
   margin-bottom: 34px;
   text-align: center;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
-  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3vw, 2.5rem);
   letter-spacing: 0.1em;
+  font-weight: 900;
 }
 
 .rsvp-section--invite .rsvp-grid {
@@ -495,6 +500,25 @@ onMounted(() => {
   color: #b94a58;
 }
 
+.rsvp-section--invite .rsvp-message-item-name {
+  font-size: clamp(0.9rem, 2vw, 1.5rem) !important;
+  font-weight: 900 !important;
+}
+
+.rsvp-section--invite .rsvp-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+}
+
+.rsvp-section--invite .rsvp-label,
+.rsvp-section--invite .rsvp-message-item-name,
+.rsvp-section--invite .rsvp-message-item-message,
+.rsvp-section--invite .rsvp-message-item-time {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  font-weight: 500;
+}
 .rsvp-section--invite .rsvp-input,
 .rsvp-section--invite .rsvp-textarea {
   border: 1px solid rgba(185, 74, 88, 0.65);
@@ -502,12 +526,13 @@ onMounted(() => {
   padding: 13px 16px;
   color: #b94a58;
   background: rgba(255, 255, 255, 0.36);
+  font-family: var(--font-form);
 }
 
 .rsvp-section--invite .rsvp-button {
   align-self: flex-end;
   background: #b94a58;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-form);
   text-transform: uppercase;
 }
 
@@ -525,8 +550,6 @@ onMounted(() => {
   border-radius: 8px;
   box-shadow: none;
 }
-
-
 
 .rsvp-load-more-button {
   display: none;
@@ -547,7 +570,7 @@ onMounted(() => {
 .rsvp-section--invite .rsvp-loading-more {
   height: auto;
   padding: 10px 0 0;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
 }
 
 .rsvp-section--invite .rsvp-load-more-button {
@@ -560,7 +583,7 @@ onMounted(() => {
   padding: 10px 22px;
   background: rgba(255, 255, 255, 0.56);
   color: #b94a58;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
   font-weight: 700;
   cursor: pointer;
 }

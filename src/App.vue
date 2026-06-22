@@ -127,7 +127,7 @@ onMounted(() => {
 
 .heart-stroke {
   fill: none;
-  stroke: #d4a5a5;
+  stroke: var(--wedding-primary);
   stroke-width: 10;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -144,7 +144,7 @@ onMounted(() => {
 }
 
 .text-separator {
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-size: 40px;
   font-weight: 600;
   text-decoration: none;

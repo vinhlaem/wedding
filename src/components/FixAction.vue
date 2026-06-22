@@ -93,7 +93,7 @@ function scrollTo(id) {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: #d4a5a5;
+  background-color: var(--wedding-primary);
   border: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;

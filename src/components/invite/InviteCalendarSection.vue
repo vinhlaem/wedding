@@ -83,9 +83,9 @@ const googleCalendarUrl = computed(() => {
 .invite-calendar__card h2 {
   margin: 0;
   padding: 12px;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
 .invite-calendar__weekdays,
@@ -106,11 +106,12 @@ const googleCalendarUrl = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
 }
 
 .invite-calendar__weekdays span {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: 900;
 }
 
 .invite-calendar__days {
@@ -119,7 +120,8 @@ const googleCalendarUrl = computed(() => {
 
 .invite-calendar__days span {
   position: relative;
-  font-size: 0.93rem;
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
 .invite-calendar__days .is-wedding-day {
@@ -133,12 +135,12 @@ const googleCalendarUrl = computed(() => {
   content: "♥";
   position: absolute;
   left: 50%;
-  top: 40%;
+  top: 52%;
   width: auto;
   height: auto;
   background: transparent;
   color: #b94a58;
-  font-size: 63px;
+  font-size: 80px;
   line-height: 1;
   transform: translate(-50%, -47%);
   z-index: -1;
@@ -148,7 +150,10 @@ const googleCalendarUrl = computed(() => {
   display: inline-block;
   margin-top: 34px;
   color: #b94a58;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
   text-underline-offset: 4px;
+  font-weight: 900;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  text-decoration: underline;
 }
 </style>

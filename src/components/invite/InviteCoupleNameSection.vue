@@ -26,7 +26,7 @@ defineProps({
 .invite-couple__amp {
   margin: 0;
   color: #b94a58;
-  font-family: var(--font-dancing-script);
+  font-family: var(--font-couple);
   font-weight: 400;
   line-height: 1.05;
 }
@@ -34,19 +34,20 @@ defineProps({
 .invite-couple__name {
   max-width: 820px;
   margin: 0 auto;
-  font-size: clamp(2.8rem, 6.8vw, 5.4rem);
+  font-size: clamp(2.8rem, 6.8vw, 4.5rem);
 }
 
 .invite-couple__amp {
-  font-size: clamp(2.7rem, 6vw, 4.8rem);
+  font-size: clamp(2.7rem, 6vw, 4rem);
   margin: clamp(12px, 2vw, 22px) 0;
 }
 
 .invite-couple__subtitle {
   margin: clamp(44px, 8vw, 72px) 0 0;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-heading);
   font-size: clamp(1rem, 2vw, 1.25rem);
   letter-spacing: 0.1em;
+  font-weight: 900;
   text-transform: uppercase;
 }
 @media (max-width: 640px) {

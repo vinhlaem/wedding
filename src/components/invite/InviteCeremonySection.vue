@@ -63,9 +63,10 @@ const paddedMonth = computed(() =>
 
 .invite-ceremony__intro {
   margin: 0 0 8px;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-heading);
   font-size: clamp(1.2rem, 3vw, 1.7rem);
   text-transform: uppercase;
+  font-weight: 900;
 }
 
 .invite-ceremony__couple {
@@ -78,17 +79,17 @@ const paddedMonth = computed(() =>
 .invite-ceremony__couple h3,
 .invite-ceremony__couple span {
   margin: 0;
-  font-family: var(--font-dancing-script);
-  font-size: clamp(2.7rem, 6.4vw, 5rem);
+  font-family: var(--font-couple);
+  font-size: clamp(2.7rem, 6.4vw, 4.5rem);
   line-height: 1.05;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .invite-ceremony__couple p {
   margin: 18px 0 0;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
-  letter-spacing: 0.35em;
-  font-size: 0.82rem;
+  font-family: var(--font-body);
+  font-size: 1.3rem;
+  font-weight: 900;
 }
 @media (max-width: 640px) {
   .invite-ceremony__couple h3,

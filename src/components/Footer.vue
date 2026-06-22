@@ -79,14 +79,14 @@ onMounted(async () => {
 .thankyou-title {
   font-family: var(--font-dancing-script);
   font-size: 2rem;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-weight: 600;
   margin: 0 0 12px 0;
 }
 
 .thankyou-text {
   font-family: var(--font-mulish);
-  color: #333;
+  color: var(--wedding-text);
   font-size: 0.95rem;
   line-height: 1.7;
   margin: 0;

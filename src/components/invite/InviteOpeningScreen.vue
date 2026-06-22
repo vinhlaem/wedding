@@ -18,7 +18,11 @@
       <p class="invite-opening__message">
         đến dự buổi tiệc chung vui cùng gia đình
       </p>
-      <button class="invite-opening__button" type="button" @click="$emit('open')">
+      <button
+        class="invite-opening__button"
+        type="button"
+        @click="$emit('open')"
+      >
         Mở thiệp
       </button>
     </article>
@@ -58,6 +62,7 @@ const cardStyle = {
   overflow: hidden;
   background: #b94a58;
   color: #b94a58;
+  font-family: var(--font-body);
 }
 
 .invite-opening__card {
@@ -88,8 +93,8 @@ const cardStyle = {
 
 .invite-opening__names {
   margin: 18px 0 12px;
-  font-family: var(--font-dancing-script);
-  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-family: var(--font-couple);
+  font-size: clamp(2.4rem, 6vw, 3.5rem);
   line-height: 1.05;
 }
 
@@ -125,12 +130,13 @@ const cardStyle = {
 .invite-opening__label,
 .invite-opening__message {
   margin: 0;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
-  font-size: 1.05rem;
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 900;
 }
 
-.invite-opening__label {
-  margin-top: 26px;
+.invite-opening__date {
+  font-size: 1.7rem;
 }
 
 .invite-opening__guest {
@@ -139,7 +145,7 @@ const cardStyle = {
   padding: 7px 22px;
   border-radius: 12px;
   background: rgba(185, 74, 88, 0.08);
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
   font-size: clamp(1.05rem, 3.5vw, 1.35rem);
   font-weight: 700;
 }
@@ -151,6 +157,7 @@ const cardStyle = {
   padding: 13px 34px;
   background: #b94a58;
   color: #fff;
+  font-family: var(--font-form);
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;

@@ -40,8 +40,10 @@ defineProps({
 .invite-map__address {
   width: min(620px, 100%);
   margin: 18px auto 42px;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
   line-height: 1.7;
+  font-weight: 900;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
 }
 
 .invite-map__frame {

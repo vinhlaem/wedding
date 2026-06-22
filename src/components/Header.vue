@@ -135,7 +135,7 @@ onUnmounted(() => {
 
 /* When header is scrolled, use dark links */
 .header-scrolled .header-link {
-  color: #000;
+  color: var(--wedding-text);
 }
 
 .container {
@@ -166,11 +166,11 @@ onUnmounted(() => {
 }
 
 .header-link-actived {
-  border-bottom: 3px solid #d4a5a5;
+  border-bottom: 3px solid var(--wedding-primary);
 }
 
 .header-separator {
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-size: 40px;
   font-weight: 600;
   text-decoration: none;
@@ -230,7 +230,7 @@ onUnmounted(() => {
 .mobile-title {
   font-family: var(--font-dancing-script);
   font-size: 2rem;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-weight: 700;
 }
 .close-btn {
@@ -247,7 +247,7 @@ onUnmounted(() => {
 .mobile-link {
   padding: 12px 4px;
   text-decoration: none;
-  color: #000;
+  color: var(--wedding-text);
   font-weight: 600;
   text-transform: uppercase;
 }

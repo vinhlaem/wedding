@@ -50,13 +50,19 @@ defineProps({
 .invite-wedding-info__parents,
 .invite-wedding-info__family p {
   margin: 0;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
+  font-family: var(--font-body);
 }
 
 .invite-wedding-info__label {
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.invite-wedding-info__parents {
+  font-weight: 900;
+  font-size: 1.2rem;
 }
 
 .invite-wedding-info__parents {
@@ -65,14 +71,17 @@ defineProps({
 
 .invite-wedding-info__family h3 {
   margin: 10px 0 0;
-  font-family: var(--invite-serif, "Noto Serif", "Times New Roman", serif);
-  font-size: clamp(1.2rem, 2.7vw, 1.7rem);
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 2.7vw, 2rem);
+  font-weight: 900;
 }
 
 .invite-wedding-info__family p:last-child {
   margin-top: 18px;
   line-height: 1.7;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-family: var(--font-body);
+  font-weight: 700;
 }
 
 @media (max-width: 680px) {

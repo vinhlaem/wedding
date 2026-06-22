@@ -33,7 +33,7 @@ defineProps({
 .quote-title {
     font-family: var(--font-dancing-script);
     font-size: 3rem;
-    color: #d4a5a5;
+    color: var(--wedding-primary);
     font-weight: 600;
     margin: 0;
 

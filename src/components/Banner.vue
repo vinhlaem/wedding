@@ -162,7 +162,7 @@ onMounted(async () => {
 }
 
 .rsvp-button {
-  background: #d4a5a5;
+  background: var(--wedding-primary);
   color: white;
   border: none;
   padding: 15px 40px;
@@ -179,7 +179,7 @@ onMounted(async () => {
 }
 
 .rsvp-button:hover {
-  background: #c49595;
+  background: var(--wedding-primary-hover);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(212, 165, 165, 0.4);
 }

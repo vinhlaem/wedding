@@ -84,7 +84,7 @@ onMounted(async () => {
 .timeline-subtitle {
   font-family: var(--font-mulish);
   font-size: 1.2rem;
-  color: #666;
+  color: var(--wedding-text);
   text-align: center;
   margin: 20px 0 60px 0;
   font-weight: 400;
@@ -120,7 +120,7 @@ onMounted(async () => {
   left: 19px;
   top: 40px;
   width: 2px;
-  background: #d4a5a5;
+  background: var(--wedding-primary);
   height: calc(100% + 40px);
 }
 
@@ -133,7 +133,7 @@ onMounted(async () => {
   height: 40px;
   border-radius: 50%;
   background: #fff;
-  border: 3px solid #d4a5a5;
+  border: 3px solid var(--wedding-primary);
   position: relative;
   z-index: 2;
   flex-shrink: 0;
@@ -157,7 +157,7 @@ onMounted(async () => {
 .event-date {
   font-family: var(--font-mulish);
   font-size: 0.9rem;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-weight: 500;
   margin-bottom: 8px;
   letter-spacing: 0.5px;
@@ -166,7 +166,7 @@ onMounted(async () => {
 .event-title {
   font-family: var(--font-mulish);
   font-size: 2.5rem;
-  color: #333;
+  color: var(--wedding-text);
   font-weight: 700;
   margin: 0 0 20px 0;
   line-height: 1.2;
@@ -176,7 +176,7 @@ onMounted(async () => {
   font-family: var(--font-mulish);
   font-size: 1rem;
   line-height: 1.8;
-  color: #555;
+  color: var(--wedding-text);
   margin: 0;
 }
 

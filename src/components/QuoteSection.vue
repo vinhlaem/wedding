@@ -74,7 +74,7 @@ onMounted(async () => {
 .decorative-line {
   flex: 1;
   height: 1px;
-  background: #d4a5a5;
+  background: var(--wedding-primary);
   max-width: 150px;
 }
 
@@ -87,7 +87,7 @@ onMounted(async () => {
   font-family: var(--font-dancing-script);
   font-size: 2.5rem;
   line-height: 1.8;
-  color: #333;
+  color: var(--wedding-text);
   text-align: center;
 }
 
@@ -112,7 +112,7 @@ onMounted(async () => {
 .signature-text {
   font-family: var(--font-dancing-script);
   font-size: 2rem;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-weight: 600;
   margin: 0;
 }

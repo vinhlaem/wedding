@@ -144,7 +144,7 @@ onMounted(async () => {
   padding: 20px;
   background: #fff;
   border-radius: 100%;
-  border: 2px solid #d4a5a5;
+  border: 2px solid var(--wedding-primary);
   width: 100%;
   height: 100%;
   max-width: 450px;
@@ -179,7 +179,7 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border: 2px solid #d4a5a5;
+  border: 2px solid var(--wedding-primary);
 }
 
 .heart-icon {
@@ -204,7 +204,7 @@ onMounted(async () => {
   align-items: center;
   justify-content: center;
   height: 250px;
-  border: 2px solid #d4a5a5;
+  border: 2px solid var(--wedding-primary);
 }
 
 .info-husband {
@@ -233,20 +233,20 @@ onMounted(async () => {
 
 .role-line {
   font-size: 1.5rem;
-  color: #333;
+  color: var(--wedding-text);
 }
 
 .name {
   font-family: var(--font-dancing-script);
   font-size: 3rem;
-  color: #d4a5a5;
+  color: var(--wedding-primary);
   font-weight: 400;
 }
 
 .info-text {
   font-family: var(--font-mulish);
   font-size: 1.2rem;
-  color: #333;
+  color: var(--wedding-text);
   font-weight: 400;
   text-align: start;
 }
