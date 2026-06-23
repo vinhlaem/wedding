@@ -40,6 +40,8 @@ const buildInviteMetaHtml = ({ url, guestName, place }) => {
   const safeDescription = escapeHtml(description);
   const safeGuestName = escapeHtml(guestName);
 
+  console.log(safeTitle);
+
   return `<!DOCTYPE html>
 <html lang="vi">
   <head>

@@ -41,7 +41,7 @@ const guestName = computed(() => {
 const place = computed(() => (route.query.place === "bride" ? "bride" : "groom"));
 const placeInfo = computed(() => inviteConfig.places[place.value]);
 const inviteTitle = computed(
-  () => `${guestName.value}, thân mời dự lễ cưới ${inviteConfig.groomName} & ${inviteConfig.brideName}`,
+  () => `Thân mời ${guestName.value} dự lễ cưới ${inviteConfig.groomName} & ${inviteConfig.brideName}`,
 );
 const inviteDescription = computed(() => {
   const side = place.value === "bride" ? "nhà gái" : "nhà trai";

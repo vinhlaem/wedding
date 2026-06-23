@@ -306,7 +306,7 @@ onMounted(() => {
   border-radius: 999px;
   padding: 12px 22px;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: clamp(0.8rem, 2vw, 1.3rem);
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(212, 165, 165, 0.35);
 }
@@ -501,8 +501,10 @@ onMounted(() => {
 }
 
 .rsvp-section--invite .rsvp-message-item-name {
-  font-size: clamp(0.9rem, 2vw, 1.5rem) !important;
+  font-size: clamp(1.4rem, 2.2vw, 1.7rem) !important;
   font-weight: 900 !important;
+  font-family: var(--font-couple) !important;
+  letter-spacing: 0.15em;
 }
 
 .rsvp-section--invite .rsvp-title {
@@ -516,8 +518,8 @@ onMounted(() => {
 .rsvp-section--invite .rsvp-message-item-message,
 .rsvp-section--invite .rsvp-message-item-time {
   font-family: var(--font-body);
-  font-size: clamp(0.9rem, 2vw, 1.3rem);
-  font-weight: 500;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 700;
 }
 .rsvp-section--invite .rsvp-input,
 .rsvp-section--invite .rsvp-textarea {

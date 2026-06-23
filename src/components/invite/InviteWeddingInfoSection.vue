@@ -36,7 +36,7 @@ defineProps({
 }
 
 .invite-wedding-info .invite-heading {
-  font-size: clamp(1.65rem, 4.6vw, 2.35rem);
+  font-size: clamp(1.8rem, 4.6vw, 2.35rem);
 }
 
 .invite-wedding-info__grid {
@@ -60,13 +60,13 @@ defineProps({
 .invite-wedding-info__label {
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: clamp(1.12rem, 3.2vw, 1.35rem);
+  font-size: clamp(1.3rem, 3.2vw, 1.35rem);
   font-weight: 900;
 }
 
 .invite-wedding-info__parents {
   font-weight: 900;
-  font-size: clamp(1.25rem, 3.6vw, 1.55rem);
+  font-size: clamp(1.3rem, 3.6vw, 1.55rem);
 }
 
 .invite-wedding-info__parents {
@@ -76,14 +76,14 @@ defineProps({
 .invite-wedding-info__family h3 {
   margin: 10px 0 0;
   font-family: var(--font-body);
-  font-size: clamp(1.42rem, 4.3vw, 2.35rem);
+  font-size: clamp(1.8rem, 4.3vw, 2.35rem);
   font-weight: 900;
 }
 
 .invite-wedding-info__family p:last-child {
   margin-top: 18px;
   line-height: 1.7;
-  font-size: clamp(1.02rem, 3vw, 1.28rem);
+  font-size: clamp(1.125rem, 3vw, 1.28rem);
   font-family: var(--font-body);
   font-weight: 700;
 }

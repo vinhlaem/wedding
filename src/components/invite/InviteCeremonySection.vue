@@ -64,7 +64,7 @@ const paddedMonth = computed(() =>
 .invite-ceremony__intro {
   margin: 0 0 8px;
   font-family: var(--font-heading);
-  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
   text-transform: uppercase;
   font-weight: 900;
 }

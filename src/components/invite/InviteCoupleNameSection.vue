@@ -52,7 +52,7 @@ defineProps({
 }
 @media (max-width: 640px) {
   .invite-couple__name {
-    font-size: clamp(2.6rem, 13vw, 4rem);
+    font-size: clamp(2.6rem, 11vw, 4rem);
   }
 
   .invite-couple__amp {

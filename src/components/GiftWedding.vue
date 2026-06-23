@@ -51,50 +51,62 @@
       </button>
     </template>
 
-    <div v-if="showModal" class="gift-modal" @click.self="closeGiftModal">
-      <article
-        class="gift-modal__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Phong bao mừng cưới"
-      >
-        <button class="gift-modal__close" type="button" @click="closeGiftModal">
-          ×
-        </button>
-        <h2>PHONG BAO MỪNG CƯỚI</h2>
-
-        <div v-if="modalAccounts.length" class="gift-modal__grid">
-          <div
-            class="gift-modal__account"
-            v-for="acc in modalAccounts"
-            :key="acc._id || acc.accountNumber"
+    <Teleport to="body">
+      <div v-if="showModal" class="gift-modal" @click.self="closeGiftModal">
+        <article
+          class="gift-modal__dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Phong bao mừng cưới"
+        >
+          <button
+            class="gift-modal__close"
+            type="button"
+            @click="closeGiftModal"
           >
-            <p class="gift-modal__role">
-              {{ acc.role || acc.accountHolder || "Tài khoản" }}
-            </p>
-            <div class="gift-modal__qr" v-if="acc.qrData">
-              <img :src="acc.qrData" alt="VietQR" />
-            </div>
-            <div class="gift-modal__qr gift-modal__qr--empty" v-else>
-              QR không khả dụng
-            </div>
-            <p>{{ acc.bankName || "---" }}</p>
-            <p>{{ acc.accountNumber || "---" }}</p>
-            <strong>{{ acc.accountHolder || "---" }}</strong>
-            <button
-              v-if="acc.qrData"
-              class="gift-modal__save"
-              type="button"
-              @click="downloadQR(acc)"
-            >
-              Lưu QR
-            </button>
-          </div>
-        </div>
+            ×
+          </button>
+          <h2>PHONG BAO MỪNG CƯỚI</h2>
 
-        <p v-else class="gift-modal__empty">Chưa có thông tin tài khoản.</p>
-      </article>
-    </div>
+          <div v-if="modalAccounts.length" class="gift-modal__grid">
+            <div
+              class="gift-modal__account"
+              v-for="acc in modalAccounts"
+              :key="acc._id || acc.accountNumber"
+            >
+              <p class="gift-modal__role">
+                {{
+                  acc.role ||
+                  (acc.accountHolder
+                    ? acc.accountHolder.charAt(0).toUpperCase() +
+                      acc.accountHolder.slice(1).toLowerCase()
+                    : "Tài khoản")
+                }}
+              </p>
+              <div class="gift-modal__qr" v-if="acc.qrData">
+                <img :src="acc.qrData" alt="VietQR" />
+              </div>
+              <div class="gift-modal__qr gift-modal__qr--empty" v-else>
+                QR không khả dụng
+              </div>
+              <p>{{ acc.bankName || "---" }}</p>
+              <p>{{ acc.accountNumber || "---" }}</p>
+              <strong>{{ acc.accountHolder || "---" }}</strong>
+              <button
+                v-if="acc.qrData"
+                class="gift-modal__save"
+                type="button"
+                @click="downloadQR(acc)"
+              >
+                Lưu QR
+              </button>
+            </div>
+          </div>
+
+          <p v-else class="gift-modal__empty">Chưa có thông tin tài khoản.</p>
+        </article>
+      </div>
+    </Teleport>
   </section>
 </template>
 
@@ -349,7 +361,7 @@ onMounted(loadAccount);
 .gift-modal__dialog h2 {
   margin: 0 0 28px;
   font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-size: clamp(1.2rem, 3vw, 2rem);
   font-weight: 900;
   letter-spacing: 0.1em;
 }
@@ -363,6 +375,64 @@ onMounted(loadAccount);
   background: transparent;
   color: #b94a58;
   cursor: pointer;
+  transform-origin: 50% 85%;
+  animation: gift-envelope-shake 2.8s ease-in-out infinite;
+}
+
+.gift-envelope:hover,
+.gift-envelope:focus-visible {
+  animation: gift-envelope-shake-active 0.78s ease-in-out infinite;
+}
+
+@keyframes gift-envelope-shake {
+  0%,
+  72%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  76% {
+    transform: rotate(-3deg) translateY(-2px);
+  }
+
+  80% {
+    transform: rotate(3deg) translateY(0);
+  }
+
+  84% {
+    transform: rotate(-2deg) translateY(-1px);
+  }
+
+  88% {
+    transform: rotate(2deg) translateY(0);
+  }
+}
+
+@keyframes gift-envelope-shake-active {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-4deg) translateY(-2px);
+  }
+
+  50% {
+    transform: rotate(4deg) translateY(0);
+  }
+
+  75% {
+    transform: rotate(-3deg) translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gift-envelope,
+  .gift-envelope:hover,
+  .gift-envelope:focus-visible {
+    animation: none;
+  }
 }
 
 .gift-envelope__body {
@@ -381,6 +451,9 @@ onMounted(loadAccount);
 
 .gift-envelope__hint {
   font-family: var(--font-body);
+  font-size: 2rem;
+  color: #9b6970;
+  font-weight: 900;
 }
 
 .gift-envelope__coin {
@@ -448,6 +521,10 @@ onMounted(loadAccount);
 .gift-modal__role {
   min-height: 44px;
   font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.08em;
+  font-size: clamp(1.5rem, 3vw, 1.7rem);
+  font-family: var(--font-couple);
 }
 
 .gift-modal__qr {
