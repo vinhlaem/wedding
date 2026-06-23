@@ -23,9 +23,17 @@ import InviteOpeningScreen from "@/components/invite/InviteOpeningScreen.vue";
 import InviteMainContent from "@/components/invite/InviteMainContent.vue";
 import { inviteConfig } from "@/data/invite";
 import { useSeoMeta } from "@/composables/useSeoMeta";
+import { usePreloadImages } from "@/composables/usePreloadImages";
+import bannerBg from "@/assets/images/invite/bg.webp";
+import photoSrc from "@/assets/images/gallery/image-1.png";
 
 const route = useRoute();
 const isOpened = ref(false);
+
+usePreloadImages([
+  { href: bannerBg, type: "image/webp" },
+  { href: photoSrc, type: "image/png" },
+]);
 
 const guestName = computed(() => {
   const rawGuest = route.query.guest || "Quý khách";

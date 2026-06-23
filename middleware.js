@@ -65,6 +65,7 @@ const buildInviteMetaHtml = ({ url, guestName, place }) => {
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Thiệp cưới Vinh & Nguyệt">
+    <link rel="preload" as="image" href="/images/invite/bg.png" />
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${safeTitle}">

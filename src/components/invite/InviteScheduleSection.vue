@@ -40,7 +40,7 @@ defineProps({
   position: absolute;
   top: 14px;
   bottom: 14px;
-  left: 43.5%;
+  left: 43.3%;
   width: 1px;
   background: rgba(185, 74, 88, 0.42);
 }
