@@ -7,7 +7,8 @@ const COUPLE = {
   displayDate: "30 tháng 5, 2027",
 };
 
-const BOT_UA_PATTERN = /facebookexternalhit|facebot|twitterbot|linkedinbot|slackbot|discordbot|telegrambot|whatsapp|zalo|zaloapp|skypeuripreview|pinterest|googlebot|bingbot/i;
+const BOT_UA_PATTERN =
+  /facebookexternalhit|facebot|twitterbot|linkedinbot|slackbot|discordbot|telegrambot|whatsapp|zalo|zaloapp|skypeuripreview|pinterest|googlebot|bingbot/i;
 
 const escapeHtml = (value = "") =>
   String(value)
@@ -31,7 +32,7 @@ const normalizePlace = (value) => (value === "bride" ? "bride" : "groom");
 
 const buildInviteMetaHtml = ({ url, guestName, place }) => {
   const side = place === "bride" ? "nhà gái" : "nhà trai";
-  const title = `${guestName}, thân mời dự lễ cưới ${COUPLE.groomName} & ${COUPLE.brideName}`;
+  const title = `Thân mời ${guestName} dự lễ cưới ${COUPLE.groomName} & ${COUPLE.brideName}`;
   const description = `Thiệp cưới ${COUPLE.groomName} & ${COUPLE.brideName} trân trọng mời ${guestName} đến chung vui vào ${COUPLE.displayDate}. Thông tin nghi lễ và tiệc cưới bên ${side}.`;
 
   const safeUrl = escapeHtml(url.toString());
