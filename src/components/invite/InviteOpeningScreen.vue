@@ -17,6 +17,9 @@
           class="invite-opening__heart-burst"
           aria-hidden="true"
         >
+      <div class="invite-opening__heart-wrap" :class="{ 'is-bursting': isOpening }">
+        <div class="invite-opening__heart">♥</div>
+        <div v-if="isOpening" class="invite-opening__heart-burst" aria-hidden="true">
           <span
             v-for="heart in burstHearts"
             :key="heart.id"
@@ -40,15 +43,17 @@
       <button
         class="invite-opening__button"
         type="button"
-        @click="$emit('open')"
+        :disabled="isOpening"
+        @click="handleOpen"
       >
-        Mở thiệp
+        {{ isOpening ? "Đang mở..." : "Mở thiệp" }}
       </button>
     </article>
   </section>
 </template>
 
 <script setup>
+import { onBeforeUnmount, ref } from "vue";
 import bgFull from "@/assets/images/invite/bg-full.jpg";
 import MonogramVN from "@/components/common/MonogramVN.vue";
 
@@ -63,7 +68,34 @@ defineProps({
   },
 });
 
-defineEmits(["open"]);
+const emit = defineEmits(["open"]);
+const isOpening = ref(false);
+let openTimer;
+
+const burstHearts = Array.from({ length: 16 }, (_, index) => {
+  const angle = (360 / 16) * index + (index % 2 ? 8 : -5);
+  const distance = 72 + (index % 4) * 16;
+  const radians = (angle * Math.PI) / 180;
+
+  return {
+    id: index,
+    style: {
+      "--heart-x": `${Math.cos(radians) * distance}px`,
+      "--heart-y": `${Math.sin(radians) * distance}px`,
+      "--heart-delay": `${(index % 4) * 35}ms`,
+      "--heart-scale": 0.7 + (index % 3) * 0.2,
+    },
+  };
+});
+
+function handleOpen() {
+  if (isOpening.value) return;
+
+  isOpening.value = true;
+  openTimer = window.setTimeout(() => emit("open"), 950);
+}
+
+onBeforeUnmount(() => window.clearTimeout(openTimer));
 
 const petals = Array.from({ length: 12 }, (_, index) => index + 1);
 const cardStyle = {
@@ -96,6 +128,13 @@ const cardStyle = {
   background-position: center;
   text-align: center;
   z-index: 1;
+}
+
+.invite-opening__heart-wrap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  z-index: 2;
 }
 
 .invite-opening__heart {
@@ -251,7 +290,7 @@ const cardStyle = {
 .invite-opening__message {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3.5vw, 1.35rem);
   font-weight: 900;
 }
 
@@ -266,7 +305,7 @@ const cardStyle = {
   border-radius: 12px;
   background: rgba(185, 74, 88, 0.08);
   font-family: var(--font-body);
-  font-size: clamp(1.2rem, 3.5vw, 1.35rem);
+  font-size: clamp(1.4rem, 3.7vw, 1.7rem);
   font-weight: 900;
 }
 
@@ -286,6 +325,11 @@ const cardStyle = {
 
 .invite-opening__button:hover {
   background: #a83e4b;
+}
+
+.invite-opening__button:disabled {
+  cursor: wait;
+  opacity: 0.78;
 }
 
 .invite-opening__petals span {

@@ -43,9 +43,9 @@ defineProps({
 }
 
 .invite-couple__subtitle {
-  margin: clamp(44px, 8vw, 72px) 0 0;
+  margin: clamp(30px, 8vw, 72px) 0 0;
   font-family: var(--font-heading);
-  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-size: clamp(1.5rem, 2.3vw, 1.75rem);
   letter-spacing: 0.1em;
   font-weight: 900;
   text-transform: uppercase;

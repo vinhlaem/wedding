@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Lora:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Noto+Serif:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap&subset=vietnamese");
+@import url("https://fonts.googleapis.com/css2?family=Bellota+Text:wght@400;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Lora:wght@400;500;600;700&family=Mulish:wght@400;500;600;700&family=Noto+Serif:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap&subset=vietnamese");
 @import "./base.css";
 :root {
   --wedding-primary: #b94a58;
@@ -6,7 +6,7 @@
   --wedding-primary-soft: #f3d9de;
   --wedding-text: #b94a58;
   --font-couple: "Great Vibes", "Noto Serif", "Dancing Script", cursive;
-  --font-heading: "Cormorant Garamond", "Noto Serif", "Playfair Display", serif;
-  --font-body: "Cormorant Garamond", "Noto Serif", "Lora", serif;
+  --font-heading: "Bellota Text", "Noto Serif", serif;
+  --font-body: "Bellota Text", "Noto Serif", serif;
   --font-form: "Mulish", Arial, sans-serif;
 }
