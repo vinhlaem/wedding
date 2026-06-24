@@ -5,7 +5,16 @@
     </div>
 
     <article class="invite-opening__card" :style="cardStyle">
-      <div class="invite-opening__heart">♥</div>
+      <div class="invite-opening__heart-wrap" :class="{ 'is-bursting': isOpening }">
+        <div class="invite-opening__heart">♥</div>
+        <div v-if="isOpening" class="invite-opening__heart-burst" aria-hidden="true">
+          <span
+            v-for="heart in burstHearts"
+            :key="heart.id"
+            :style="heart.style"
+          >♥</span>
+        </div>
+      </div>
       <h1 class="invite-opening__names">
         <span>{{ config.groomName }}</span>
         <small>&</small>
@@ -21,15 +30,17 @@
       <button
         class="invite-opening__button"
         type="button"
-        @click="$emit('open')"
+        :disabled="isOpening"
+        @click="handleOpen"
       >
-        Mở thiệp
+        {{ isOpening ? "Đang mở..." : "Mở thiệp" }}
       </button>
     </article>
   </section>
 </template>
 
 <script setup>
+import { onBeforeUnmount, ref } from "vue";
 import bgFull from "@/assets/images/invite/bg-full.jpg";
 
 defineProps({
@@ -43,7 +54,34 @@ defineProps({
   },
 });
 
-defineEmits(["open"]);
+const emit = defineEmits(["open"]);
+const isOpening = ref(false);
+let openTimer;
+
+const burstHearts = Array.from({ length: 16 }, (_, index) => {
+  const angle = (360 / 16) * index + (index % 2 ? 8 : -5);
+  const distance = 72 + (index % 4) * 16;
+  const radians = (angle * Math.PI) / 180;
+
+  return {
+    id: index,
+    style: {
+      "--heart-x": `${Math.cos(radians) * distance}px`,
+      "--heart-y": `${Math.sin(radians) * distance}px`,
+      "--heart-delay": `${(index % 4) * 35}ms`,
+      "--heart-scale": 0.7 + (index % 3) * 0.2,
+    },
+  };
+});
+
+function handleOpen() {
+  if (isOpening.value) return;
+
+  isOpening.value = true;
+  openTimer = window.setTimeout(() => emit("open"), 950);
+}
+
+onBeforeUnmount(() => window.clearTimeout(openTimer));
 
 const petals = Array.from({ length: 12 }, (_, index) => index + 1);
 const cardStyle = {
@@ -78,6 +116,13 @@ const cardStyle = {
   z-index: 1;
 }
 
+.invite-opening__heart-wrap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  z-index: 2;
+}
+
 .invite-opening__heart {
   width: 58px;
   height: 58px;
@@ -89,6 +134,52 @@ const cardStyle = {
   color: #fff;
   font-size: 28px;
   box-shadow: 0 12px 24px rgba(185, 74, 88, 0.3);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.invite-opening__heart-wrap.is-bursting .invite-opening__heart {
+  animation: invite-heart-pop 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  box-shadow: 0 0 0 14px rgba(185, 74, 88, 0.12);
+}
+
+.invite-opening__heart-burst {
+  position: absolute;
+  inset: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.invite-opening__heart-burst span {
+  position: absolute;
+  color: #d95569;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0;
+  filter: drop-shadow(0 4px 5px rgba(185, 74, 88, 0.22));
+  animation: invite-heart-burst 820ms cubic-bezier(0.18, 0.75, 0.25, 1) var(--heart-delay) both;
+}
+
+@keyframes invite-heart-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.28); }
+  65% { transform: scale(0.92); }
+  100% { transform: scale(1.06); }
+}
+
+@keyframes invite-heart-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  }
+  18% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--heart-x)),
+      calc(-50% + var(--heart-y))
+    ) scale(var(--heart-scale)) rotate(28deg);
+  }
 }
 
 .invite-opening__names {
@@ -131,7 +222,7 @@ const cardStyle = {
 .invite-opening__message {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 3.5vw, 1.35rem);
   font-weight: 900;
 }
 
@@ -146,7 +237,7 @@ const cardStyle = {
   border-radius: 12px;
   background: rgba(185, 74, 88, 0.08);
   font-family: var(--font-body);
-  font-size: clamp(1.2rem, 3.5vw, 1.35rem);
+  font-size: clamp(1.4rem, 3.7vw, 1.7rem);
   font-weight: 900;
 }
 
@@ -166,6 +257,11 @@ const cardStyle = {
 
 .invite-opening__button:hover {
   background: #a83e4b;
+}
+
+.invite-opening__button:disabled {
+  cursor: wait;
+  opacity: 0.78;
 }
 
 .invite-opening__petals span {

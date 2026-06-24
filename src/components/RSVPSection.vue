@@ -473,7 +473,7 @@ onMounted(() => {
   margin-bottom: 34px;
   text-align: center;
   font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 3vw, 2.5rem);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
   letter-spacing: 0.1em;
   font-weight: 900;
 }
@@ -501,10 +501,10 @@ onMounted(() => {
 }
 
 .rsvp-section--invite .rsvp-message-item-name {
-  font-size: clamp(1.4rem, 2.2vw, 1.7rem) !important;
+  font-size: clamp(1.8rem, 2.2vw, 1.7rem) !important;
   font-weight: 900 !important;
   font-family: var(--font-couple) !important;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
 }
 
 .rsvp-section--invite .rsvp-title {
@@ -518,9 +518,15 @@ onMounted(() => {
 .rsvp-section--invite .rsvp-message-item-message,
 .rsvp-section--invite .rsvp-message-item-time {
   font-family: var(--font-body);
-  font-size: clamp(1rem, 2vw, 1.3rem);
-  font-weight: 700;
+  font-size: clamp(1.3rem, 2vw, 1.3rem);
+  font-weight: 900;
 }
+
+.rsvp-section--invite .rsvp-message-item-message,
+.rsvp-section--invite .rsvp-message-item-time {
+  color: rgba(19, 15, 15, 0.8);
+}
+
 .rsvp-section--invite .rsvp-input,
 .rsvp-section--invite .rsvp-textarea {
   border: 1px solid rgba(185, 74, 88, 0.65);
@@ -588,6 +594,7 @@ onMounted(() => {
   font-family: var(--font-body);
   font-weight: 700;
   cursor: pointer;
+  font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
 .rsvp-section--invite .rsvp-load-more-button:disabled {

@@ -1,23 +1,27 @@
 <template>
   <div class="invite-page">
-    <InviteOpeningScreen
-      v-if="!isOpened"
-      :guest-name="guestName"
-      :config="inviteConfig"
-      @open="openInvite"
-    />
-    <InviteMainContent
-      v-show="isOpened"
-      :config="inviteConfig"
-      :guest-name="guestName"
-      :place="place"
-      :place-info="placeInfo"
-    />
+    <Transition name="invite-reveal" mode="out-in" @before-enter="resetScroll">
+      <InviteOpeningScreen
+        v-if="!isOpened"
+        key="opening"
+        :guest-name="guestName"
+        :config="inviteConfig"
+        @open="openInvite"
+      />
+      <InviteMainContent
+        v-else
+        key="content"
+        :config="inviteConfig"
+        :guest-name="guestName"
+        :place="place"
+        :place-info="placeInfo"
+      />
+    </Transition>
   </div>
 </template>
 
 <script setup>
-import { computed, nextTick, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import InviteOpeningScreen from "@/components/invite/InviteOpeningScreen.vue";
 import InviteMainContent from "@/components/invite/InviteMainContent.vue";
@@ -66,13 +70,12 @@ watchEffect(() => {
   });
 });
 
-async function openInvite() {
+function openInvite() {
   isOpened.value = true;
-  await nextTick();
-  document.getElementById("invite-main")?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
+}
+
+function resetScroll() {
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 </script>
 
@@ -82,5 +85,42 @@ async function openInvite() {
   min-height: 100vh;
   background: #fff;
   overflow-x: hidden;
+}
+
+:global(.invite-reveal-leave-active) {
+  transition:
+    opacity 420ms ease,
+    transform 420ms cubic-bezier(0.4, 0, 1, 1),
+    filter 420ms ease;
+}
+
+:global(.invite-reveal-enter-active) {
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:global(.invite-reveal-leave-to) {
+  opacity: 0;
+  filter: blur(4px);
+  transform: scale(1.04);
+}
+
+:global(.invite-reveal-enter-from) {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :global(.invite-reveal-enter-active),
+  :global(.invite-reveal-leave-active) {
+    transition-duration: 1ms;
+  }
+}
+
+@media (max-width: 374.98px) {
+  :global(html:has(.invite-page)) {
+    font-size: 14px;
+  }
 }
 </style>
