@@ -151,9 +151,8 @@ const mainStyle = {
 
 .invite-date-block {
   display: grid;
-  gap: 18px;
+  gap: 6px;
   justify-items: center;
-  margin-top: clamp(46px, 8vw, 76px);
   font-family: var(--font-body);
 }
 
@@ -163,7 +162,7 @@ const mainStyle = {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-size: clamp(1.2rem, 2vw, 1.3rem);
 }
 
 .invite-date-block strong {
@@ -254,11 +253,16 @@ const mainStyle = {
 
 @media (max-width: 480px) {
   .invite-section {
-    padding: 36px 18px;
+    padding: 20px 18px;
   }
 
   .invite-date-block__date {
     gap: 10px;
+  }
+}
+@media (max-width: 375px) {
+  .invite-section {
+    padding: 20px 10px;
   }
 }
 </style>

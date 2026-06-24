@@ -73,7 +73,7 @@ const paddedMonth = computed(() =>
   display: grid;
   gap: clamp(18px, 4vw, 30px);
   justify-items: center;
-  margin: clamp(70px, 12vw, 140px) 0;
+  margin: clamp(40px, 9vw, 140px) 0;
 }
 
 .invite-ceremony__couple h3,
@@ -86,7 +86,6 @@ const paddedMonth = computed(() =>
 }
 
 .invite-ceremony__couple p {
-  margin: 18px 0 0;
   font-family: var(--font-body);
   font-size: 1.3rem;
   font-weight: 900;

@@ -31,7 +31,7 @@ defineProps({
 
 .invite-schedule__timeline {
   width: min(500px, 100%);
-  margin: clamp(48px, 7vw, 74px) auto 0;
+  margin: clamp(25px, 6vw, 74px) auto 0;
   position: relative;
 }
 
@@ -83,7 +83,7 @@ defineProps({
   white-space: nowrap;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 475px) {
   .invite-schedule__timeline {
     width: min(328px, 100%);
   }
@@ -99,16 +99,26 @@ defineProps({
   }
 
   .invite-schedule__item time {
-    font-size: 1.38rem;
+    font-size: 1.6rem;
   }
 
   .invite-schedule__item p {
-    font-size: 0.98rem;
+    font-size: 1.4rem;
     line-height: 1.18;
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
+  .invite-schedule__item time {
+    font-size: 1.4rem;
+  }
+
+  .invite-schedule__item p {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 330px) {
   .invite-schedule__timeline {
     width: min(304px, 100%);
   }
