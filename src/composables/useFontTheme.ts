@@ -21,8 +21,8 @@ export const fontThemes: Record<FontTheme, FontThemeConfig> = {
     name: "Great Vibes",
     label: "Elegant Premium",
     couple: '"Great Vibes", "Noto Serif", "Dancing Script", cursive',
-    heading: '"Bellota Text", "Noto Serif", serif',
-    body: '"Bellota Text", "Noto Serif", serif',
+    heading: '"Times New Roman", Times, serif',
+    body: '"Times New Roman", Times, serif',
     form: '"Mulish", Arial, sans-serif',
   },
   "cormorant-luxury": {

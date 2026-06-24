@@ -61,11 +61,11 @@ defineProps({
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: clamp(1.3rem, 3.2vw, 1.35rem);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .invite-wedding-info__parents {
-  font-weight: 900;
+  font-weight: 700;
   font-size: clamp(1.3rem, 3.6vw, 1.55rem);
 }
 
@@ -84,7 +84,7 @@ defineProps({
   line-height: 1.7;
   font-size: clamp(1.3rem, 3vw, 1.28rem);
   font-family: var(--font-body);
-  font-weight: 700;
+  font-weight: 500;
 }
 
 @media (max-width: 680px) {
