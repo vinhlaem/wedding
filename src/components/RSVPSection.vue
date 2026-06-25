@@ -501,7 +501,7 @@ onMounted(() => {
 }
 
 .rsvp-section--invite .rsvp-message-item-name {
-  font-size: clamp(1.8rem, 2.2vw, 1.7rem) !important;
+  font-size: clamp(1.5rem, 2.2vw, 1.7rem) !important;
   font-weight: 900 !important;
   font-family: var(--font-couple) !important;
   letter-spacing: 0.1em;
@@ -518,8 +518,8 @@ onMounted(() => {
 .rsvp-section--invite .rsvp-message-item-message,
 .rsvp-section--invite .rsvp-message-item-time {
   font-family: var(--font-body);
-  font-size: clamp(1.3rem, 2vw, 1.3rem);
-  font-weight: 900;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  font-weight: 500;
 }
 
 .rsvp-section--invite .rsvp-message-item-message,

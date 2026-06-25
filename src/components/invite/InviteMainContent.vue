@@ -162,11 +162,11 @@ const mainStyle = {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 900;
-  font-size: clamp(1.2rem, 2vw, 1.3rem);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
 }
 
 .invite-date-block strong {
-  font-size: clamp(1.2rem, 2.7vw, 1.8rem);
+  font-size: clamp(1.1rem, 2.7vw, 1.8rem);
   font-weight: 900;
 }
 

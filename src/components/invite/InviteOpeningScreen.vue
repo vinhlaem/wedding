@@ -17,9 +17,6 @@
           class="invite-opening__heart-burst"
           aria-hidden="true"
         >
-      <div class="invite-opening__heart-wrap" :class="{ 'is-bursting': isOpening }">
-        <div class="invite-opening__heart">♥</div>
-        <div v-if="isOpening" class="invite-opening__heart-burst" aria-hidden="true">
           <span
             v-for="heart in burstHearts"
             :key="heart.id"
@@ -28,8 +25,7 @@
           >
         </div>
       </div>
-      <h1 class="invite-opening__names">
-        <span>{{ config.groomName }}</span>
+      <h1 class="invite-opening__names"><span>{{ config.groomName }}</span>
         <small>&</small>
         <span>{{ config.brideName }}</span>
       </h1>
@@ -149,6 +145,7 @@ const cardStyle = {
     linear-gradient(145deg, #c95566 0%, #b74050 100%);
   color: #fff7f2;
   font-size: 28px;
+<<<<<<< HEAD
   box-shadow:
     0 16px 34px rgba(185, 74, 88, 0.34),
     0 0 0 5px rgba(255, 255, 255, 0.72),
@@ -191,6 +188,12 @@ const cardStyle = {
 .invite-opening__heart :deep(.monogram-vn__flowers circle),
 .invite-opening__heart :deep(.monogram-vn__leaf) {
   fill: #fffaf7;
+=======
+  box-shadow: 0 12px 24px rgba(185, 74, 88, 0.3);
+  transition:
+    transform 240ms ease,
+    box-shadow 240ms ease;
+>>>>>>> 8733aa7 (update font size)
 }
 
 .invite-opening__heart-wrap.is-bursting .invite-opening__heart {
@@ -290,7 +293,7 @@ const cardStyle = {
 .invite-opening__message {
   margin: 0;
   font-family: var(--font-body);
-  font-size: clamp(1rem, 3.5vw, 1.35rem);
+  font-size: clamp(0.9rem, 3.5vw, 1.35rem);
   font-weight: 900;
 }
 
