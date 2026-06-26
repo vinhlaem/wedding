@@ -54,7 +54,7 @@ const paddedMonth = computed(() =>
   display: inline-grid;
   grid-template-columns: repeat(2, minmax(120px, 1fr));
   gap: 18px;
-  margin-top: 28px;
+  margin-top: 15px;
 }
 
 .invite-party__times div {

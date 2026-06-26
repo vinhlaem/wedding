@@ -456,7 +456,7 @@ onMounted(async () => {
 
 @media (max-width: 580px) {
   .gallery-section--invite {
-    padding: 0 18px 48px;
+    padding: 0 18px 20px;
   }
 
   .gallery-section--invite .gallery-grid {

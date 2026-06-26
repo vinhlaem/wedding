@@ -25,7 +25,7 @@
           >
         </div>
       </div>
-      <h1 class="invite-opening__names">
+      <h1 class="invite-opening__names" :class="{ 'is-opening': isOpening }">
         <span>{{ config.groomName }}</span>
         <small>&</small>
         <span>{{ config.brideName }}</span>
@@ -40,15 +40,17 @@
       <button
         class="invite-opening__button"
         type="button"
-        @click="$emit('open')"
+        :disabled="isOpening"
+        @click="handleOpen"
       >
-        Mở thiệp
+        {{ isOpening ? "Đang mở..." : "Mở thiệp" }}
       </button>
     </article>
   </section>
 </template>
 
 <script setup>
+import { onBeforeUnmount, ref } from "vue";
 import bgFull from "@/assets/images/invite/bg-full.jpg";
 import MonogramVN from "@/components/common/MonogramVN.vue";
 
@@ -63,7 +65,36 @@ defineProps({
   },
 });
 
-defineEmits(["open"]);
+const emit = defineEmits(["open"]);
+const isOpening = ref(false);
+let openTimer;
+
+const burstHearts = Array.from({ length: 24 }, (_, index) => {
+  const angle = (360 / 24) * index + (index % 2 ? 7 : -6);
+  const distance = 82 + (index % 5) * 14;
+  const radians = (angle * Math.PI) / 180;
+
+  return {
+    id: index,
+    style: {
+      "--heart-x": `${Math.cos(radians) * distance}px`,
+      "--heart-y": `${Math.sin(radians) * distance}px`,
+      "--heart-delay": `${(index % 6) * 28}ms`,
+      "--heart-scale": 0.62 + (index % 4) * 0.16,
+      "--heart-rotate": `${index % 2 ? 42 : -36}deg`,
+      "--heart-size": `${14 + (index % 4) * 3}px`,
+    },
+  };
+});
+
+function handleOpen() {
+  if (isOpening.value) return;
+
+  isOpening.value = true;
+  openTimer = window.setTimeout(() => emit("open"), 1100);
+}
+
+onBeforeUnmount(() => window.clearTimeout(openTimer));
 
 const petals = Array.from({ length: 12 }, (_, index) => index + 1);
 const cardStyle = {
@@ -98,15 +129,27 @@ const cardStyle = {
   z-index: 1;
 }
 
+.invite-opening__heart-wrap {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  z-index: 2;
+}
+
 .invite-opening__heart {
   width: 122px;
   height: 122px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   border-radius: 50%;
   background:
-    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.16), transparent 34%),
+    radial-gradient(
+      circle at 35% 28%,
+      rgba(255, 255, 255, 0.16),
+      transparent 34%
+    ),
     linear-gradient(145deg, #c95566 0%, #b74050 100%);
   color: #fff7f2;
   font-size: 28px;
@@ -120,6 +163,16 @@ const cardStyle = {
     filter 240ms ease;
 }
 
+
+.invite-opening__heart::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: inherit;
+  border: 2px solid rgba(185, 74, 88, 0.3);
+  opacity: 0;
+  pointer-events: none;
+}
 .invite-opening__heart :deep(.monogram-vn) {
   width: 94px;
   color: #fff7f2;
@@ -155,8 +208,16 @@ const cardStyle = {
 }
 
 .invite-opening__heart-wrap.is-bursting .invite-opening__heart {
-  animation: invite-heart-pop 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  filter: drop-shadow(0 0 18px rgba(185, 74, 88, 0.42));
+  animation: invite-heart-pop-shake 920ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  filter: drop-shadow(0 0 22px rgba(185, 74, 88, 0.48));
+}
+
+.invite-opening__heart-wrap.is-bursting .invite-opening__heart::before {
+  animation: invite-heart-ring 900ms ease-out both;
+}
+
+.invite-opening__heart-wrap.is-bursting :deep(.monogram-vn) {
+  animation: invite-monogram-wiggle 860ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .invite-opening__heart-burst {
@@ -170,29 +231,66 @@ const cardStyle = {
 .invite-opening__heart-burst span {
   position: absolute;
   color: #d95569;
-  font-size: 18px;
+  font-size: var(--heart-size);
   line-height: 1;
   opacity: 0;
-  filter: drop-shadow(0 4px 5px rgba(185, 74, 88, 0.22));
-  animation: invite-heart-burst 820ms cubic-bezier(0.18, 0.75, 0.25, 1)
+  filter: drop-shadow(0 4px 6px rgba(185, 74, 88, 0.28));
+  animation: invite-heart-burst 1040ms cubic-bezier(0.18, 0.75, 0.25, 1)
     var(--heart-delay) both;
 }
 
-@keyframes invite-heart-pop {
+@keyframes invite-heart-pop-shake {
   0% {
-    transform: scale(1);
+    transform: scale(1) rotate(0deg);
   }
-  35% {
-    transform: scale(1.28);
+  16% {
+    transform: scale(1.18) rotate(-9deg);
   }
-  65% {
-    transform: scale(0.92);
+  30% {
+    transform: scale(1.28) rotate(8deg);
+  }
+  44% {
+    transform: scale(1.18) rotate(-6deg);
+  }
+  58% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  74% {
+    transform: scale(1.08) rotate(-2deg);
   }
   100% {
-    transform: scale(1.06);
+    transform: scale(1.06) rotate(0deg);
   }
 }
 
+@keyframes invite-monogram-wiggle {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  22% {
+    transform: rotate(7deg) scale(1.05);
+  }
+  42% {
+    transform: rotate(-6deg) scale(1.03);
+  }
+  62% {
+    transform: rotate(4deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes invite-heart-ring {
+  0% {
+    opacity: 0.72;
+    transform: scale(0.86);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.34);
+  }
+}
 @keyframes invite-heart-burst {
   0% {
     opacity: 0;
@@ -207,7 +305,7 @@ const cardStyle = {
         calc(-50% + var(--heart-x)),
         calc(-50% + var(--heart-y))
       )
-      scale(var(--heart-scale)) rotate(28deg);
+      scale(var(--heart-scale)) rotate(var(--heart-rotate));
   }
 }
 
@@ -215,7 +313,7 @@ const cardStyle = {
   margin: 18px 0 12px;
   font-family: var(--font-couple);
   font-size: clamp(2rem, 6vw, 3.5rem);
-  line-height: 1.05;
+  line-height: 1.22;
 }
 
 .invite-opening__names span,
@@ -223,9 +321,70 @@ const cardStyle = {
   display: block;
 }
 
+.invite-opening__names span {
+  display: block;
+  padding: 0.1em 0.22em 0.18em;
+  margin: -0.08em auto;
+  overflow: visible;
+  color: transparent;
+  background:
+    linear-gradient(
+      105deg,
+      #9f3443 0%,
+      #c85a69 28%,
+      #f0a0aa 44%,
+      #b94a58 60%,
+      #7f2432 100%
+    );
+  background-size: 240% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 5px rgba(185, 74, 88, 0.16));
+  animation: invite-name-color-flow 3.8s ease-in-out infinite;
+}
+
+.invite-opening__names span:last-child {
+  animation-delay: -1.9s;
+}
+
+.invite-opening__names.is-opening span {
+  animation:
+    invite-name-color-flow 1.1s ease-in-out infinite,
+    invite-name-open-glow 900ms ease-out both;
+}
+
 .invite-opening__names small {
   font-size: 1.8rem;
-  margin: 4px 0;
+  margin: 0.1em 0 0.16em;
+  line-height: 1.2;
+  color: #b94a58;
+  text-shadow: 0 2px 5px rgba(185, 74, 88, 0.12);
+}
+
+@keyframes invite-name-color-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes invite-name-open-glow {
+  0% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 3px 5px rgba(185, 74, 88, 0.16));
+  }
+  42% {
+    transform: translateY(-2px) scale(1.04);
+    filter: drop-shadow(0 7px 12px rgba(185, 74, 88, 0.32));
+  }
+  100% {
+    transform: translateY(0) scale(1.01);
+    filter: drop-shadow(0 4px 7px rgba(185, 74, 88, 0.2));
+  }
 }
 
 .invite-opening__divider {
@@ -251,7 +410,7 @@ const cardStyle = {
 .invite-opening__message {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.5rem;
+  font-size: clamp(0.9rem, 3.5vw, 1.35rem);
   font-weight: 900;
 }
 
@@ -266,7 +425,7 @@ const cardStyle = {
   border-radius: 12px;
   background: rgba(185, 74, 88, 0.08);
   font-family: var(--font-body);
-  font-size: clamp(1.2rem, 3.5vw, 1.35rem);
+  font-size: clamp(1.4rem, 3.7vw, 1.7rem);
   font-weight: 900;
 }
 
@@ -286,6 +445,11 @@ const cardStyle = {
 
 .invite-opening__button:hover {
   background: #a83e4b;
+}
+
+.invite-opening__button:disabled {
+  cursor: wait;
+  opacity: 0.78;
 }
 
 .invite-opening__petals span {
