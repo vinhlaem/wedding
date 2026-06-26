@@ -5,7 +5,26 @@
     </div>
 
     <article class="invite-opening__card" :style="cardStyle">
-      <div class="invite-opening__heart">♥</div>
+      <div
+        class="invite-opening__heart-wrap"
+        :class="{ 'is-bursting': isOpening }"
+      >
+        <div class="invite-opening__heart">
+          <MonogramVN />
+        </div>
+        <div
+          v-if="isOpening"
+          class="invite-opening__heart-burst"
+          aria-hidden="true"
+        >
+          <span
+            v-for="heart in burstHearts"
+            :key="heart.id"
+            :style="heart.style"
+            >♥</span
+          >
+        </div>
+      </div>
       <h1 class="invite-opening__names">
         <span>{{ config.groomName }}</span>
         <small>&</small>
@@ -31,6 +50,7 @@
 
 <script setup>
 import bgFull from "@/assets/images/invite/bg-full.jpg";
+import MonogramVN from "@/components/common/MonogramVN.vue";
 
 defineProps({
   guestName: {
@@ -79,16 +99,116 @@ const cardStyle = {
 }
 
 .invite-opening__heart {
-  width: 58px;
-  height: 58px;
+  width: 122px;
+  height: 122px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #b94a58;
-  color: #fff;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.16), transparent 34%),
+    linear-gradient(145deg, #c95566 0%, #b74050 100%);
+  color: #fff7f2;
   font-size: 28px;
-  box-shadow: 0 12px 24px rgba(185, 74, 88, 0.3);
+  box-shadow:
+    0 16px 34px rgba(185, 74, 88, 0.34),
+    0 0 0 5px rgba(255, 255, 255, 0.72),
+    0 0 0 7px rgba(185, 74, 88, 0.1);
+  filter: drop-shadow(0 12px 18px rgba(185, 74, 88, 0.2));
+  transition:
+    transform 240ms ease,
+    filter 240ms ease;
+}
+
+.invite-opening__heart :deep(.monogram-vn) {
+  width: 94px;
+  color: #fff7f2;
+  filter: drop-shadow(0 2px 3px rgba(92, 22, 32, 0.24));
+}
+
+.invite-opening__heart :deep(.monogram-vn__wreath) {
+  stroke-width: 2.1;
+  opacity: 0.95;
+}
+
+.invite-opening__heart :deep(.monogram-vn__letters) {
+  fill: #fffaf7;
+  stroke: rgba(116, 28, 42, 0.48);
+  stroke-width: 1.35px;
+}
+
+.invite-opening__heart :deep(.monogram-vn__ampersand) {
+  fill: #ffe4df;
+  stroke: rgba(116, 28, 42, 0.28);
+  stroke-width: 0.65px;
+}
+
+.invite-opening__heart :deep(.monogram-vn__flowers) {
+  fill: #ffe0dc;
+  stroke: #fff7f2;
+  stroke-width: 1.45;
+}
+
+.invite-opening__heart :deep(.monogram-vn__flowers circle),
+.invite-opening__heart :deep(.monogram-vn__leaf) {
+  fill: #fffaf7;
+}
+
+.invite-opening__heart-wrap.is-bursting .invite-opening__heart {
+  animation: invite-heart-pop 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  filter: drop-shadow(0 0 18px rgba(185, 74, 88, 0.42));
+}
+
+.invite-opening__heart-burst {
+  position: absolute;
+  inset: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.invite-opening__heart-burst span {
+  position: absolute;
+  color: #d95569;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0;
+  filter: drop-shadow(0 4px 5px rgba(185, 74, 88, 0.22));
+  animation: invite-heart-burst 820ms cubic-bezier(0.18, 0.75, 0.25, 1)
+    var(--heart-delay) both;
+}
+
+@keyframes invite-heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.28);
+  }
+  65% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes invite-heart-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--heart-x)),
+        calc(-50% + var(--heart-y))
+      )
+      scale(var(--heart-scale)) rotate(28deg);
+  }
 }
 
 .invite-opening__names {

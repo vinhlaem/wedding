@@ -12,9 +12,9 @@
             >{{ item.label }}</RouterLink
           >
         </div>
-        <div class="header-separator">
-          V<span class="header-separator-icon">💞</span>N
-        </div>
+        <RouterLink class="header-separator" to="/" aria-label="Trang chủ">
+          <MonogramVN />
+        </RouterLink>
         <div class="header-link-container">
           <RouterLink
             class="header-link"
@@ -72,6 +72,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import { header } from "@/data/header.js";
+import MonogramVN from "@/components/common/MonogramVN.vue";
 
 const FIRST_HEADER = header.slice(0, 3);
 const SECOND_HEADER = header.slice(3);
@@ -170,17 +171,50 @@ onUnmounted(() => {
 }
 
 .header-separator {
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  padding: 6px;
   color: var(--wedding-primary);
-  font-size: 40px;
-  font-weight: 600;
   text-decoration: none;
-  font-family: var(--font-dancing-script);
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 10px 26px rgba(92, 33, 33, 0.16),
+    0 0 0 1px rgba(185, 74, 88, 0.16);
+  backdrop-filter: blur(6px);
+  transform: translateY(2px);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
-.header-separator-icon {
-  font-size: 30px;
-  font-weight: 600;
-  font-family: var(--font-dancing-script);
+.header:not(.header-scrolled) .header-separator {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(255, 248, 248, 0.9) 62%,
+    rgba(255, 255, 255, 0.58) 100%
+  );
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.22),
+    0 4px 14px rgba(185, 74, 88, 0.24),
+    0 0 0 1px rgba(255, 255, 255, 0.68);
+}
+
+.header:not(.header-scrolled) .header-separator :deep(.monogram-vn) {
+  filter: drop-shadow(0 2px 3px rgba(255, 255, 255, 0.9));
+}
+
+.header-scrolled .header-separator {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 8px 22px rgba(92, 33, 33, 0.1),
+    0 0 0 1px rgba(185, 74, 88, 0.12);
+  transform: translateY(0);
 }
 
 /* Hamburger (hidden on desktop) */
@@ -286,7 +320,11 @@ onUnmounted(() => {
   }
   /* keep the center separator visible on mobile */
   .header-separator {
-    display: block;
+    display: grid;
+    width: 58px;
+    height: 58px;
+    padding: 5px;
+    transform: translateY(0);
   }
 }
 </style>

@@ -26,7 +26,7 @@
 
       <!-- Bottom signature -->
       <div class="quote-signature">
-        <p class="signature-text">Vinh 💕 Nguyệt</p>
+        <MonogramVN class="signature-monogram" />
       </div>
     </div>
   </section>
@@ -37,6 +37,7 @@ import { ref, onMounted } from "vue";
 import localQuoteImage1 from "@/assets/images/quote/image1.png";
 import localQuoteImage2 from "@/assets/images/quote/image2.png";
 import TitleSection from "@/components/common/TitleSection.vue";
+import MonogramVN from "@/components/common/MonogramVN.vue";
 import { fetchMedia } from "@/api/media";
 
 const quoteImage1 = ref(localQuoteImage1);
@@ -109,12 +110,8 @@ onMounted(async () => {
   gap: 20px;
 }
 
-.signature-text {
-  font-family: var(--font-dancing-script);
-  font-size: 2rem;
-  color: var(--wedding-primary);
-  font-weight: 600;
-  margin: 0;
+.signature-monogram {
+  width: 128px;
 }
 
 @media (max-width: 1199px) {
@@ -177,8 +174,8 @@ onMounted(async () => {
   .signature-line {
     display: none;
   }
-  .signature-text {
-    font-size: 0.9rem;
+  .signature-monogram {
+    width: 96px;
   }
 }
 </style>
